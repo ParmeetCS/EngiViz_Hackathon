@@ -398,6 +398,12 @@
 <button data-borough="Brooklyn" class="borough-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Brooklyn</button>
 <button data-borough="Queens" class="borough-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Queens</button>
 </div>
+<!-- Review Filter Pill Group -->
+<div id="review-filter-container" class="flex items-center gap-1 p-1 rounded-full bg-surface/90 backdrop-blur-md shadow-md">
+<button data-review-filter="all" class="review-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container font-medium transition-all">All Listings</button>
+<button data-review-filter="highly" class="review-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Highly Reviewed (&ge;50)</button>
+<button data-review-filter="top" class="review-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Top Review Range (&ge;100)</button>
+</div>
 <!-- Zoom Controller -->
 <div class="flex items-center gap-1 p-1 rounded-lg bg-surface/90 backdrop-blur-md shadow-md w-max">
 <button id="map-zoom-in" class="w-7 h-7 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface text-sm transition-all">+</button>
@@ -420,9 +426,9 @@
 <span id="map-active-borough-label">High Density Cluster: North Brooklyn</span>
 </div>
 </div>
-<!-- SVG Map Rendering Viewport -->
-<div class="w-full h-[520px] md:h-[620px] flex items-center justify-center">
-<svg id="geospatial-map-svg" class="w-full h-full" viewbox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg">
+<!-- SVG Map Rendering Viewport + High-Performance Canvas Point Layer -->
+<div id="map-canvas-container" class="relative w-full h-[520px] md:h-[620px] flex items-center justify-center overflow-hidden">
+<svg id="geospatial-map-svg" class="absolute inset-0 w-full h-full" viewbox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <!-- Heatmap radial gradient hot-zones -->
 <radialgradient cx="50%" cy="50%" id="hotspotBklyn" r="50%">

@@ -22,16 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function positionTooltip(e) {
-    const pad = 12;
+    const pad = 14;
     let x = e.clientX + pad;
     let y = e.clientY + pad;
     const rect = tooltip.getBoundingClientRect();
-    if (x + rect.width > window.innerWidth - 10) {
+    if (x + rect.width > window.innerWidth - 12) {
       x = e.clientX - rect.width - pad;
     }
-    if (y + rect.height > window.innerHeight - 10) {
+    if (y + rect.height > window.innerHeight - 12) {
       y = e.clientY - rect.height - pad;
     }
+    // Hard clamp within viewport to prevent off-screen overflow
+    x = Math.max(12, Math.min(window.innerWidth - rect.width - 12, x));
+    y = Math.max(12, Math.min(window.innerHeight - rect.height - 12, y));
     tooltip.style.left = `${x}px`;
     tooltip.style.top = `${y}px`;
   }

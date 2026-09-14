@@ -679,17 +679,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTransform = d3.zoomIdentity;
     let hoveredListing = null;
 
-    // Cache geographic projection coordinates for all 48,895 records once
-    const lonMin = -74.259, lonMax = -73.700;
-    const latMin = 40.477, latMax = 40.917;
+    // Real New York City Map Dimensions & WGS84 Bounding Box
+    const MAP_W = 1000;
+    const MAP_H = 974;
+    const lonMin = -74.258, lonMax = -73.700;
+    const latMin = 40.49979, latMax = 40.9153;
 
+    // Cache geographic projection coordinates for all 48,895 records once
     records.forEach(d => {
-      d._x = ((d.longitude - lonMin) / (lonMax - lonMin)) * 1000;
-      d._y = ((latMax - d.latitude) / (latMax - latMin)) * 650;
+      d._x = ((d.longitude - lonMin) / (lonMax - lonMin)) * MAP_W;
+      d._y = ((latMax - d.latitude) / (latMax - latMin)) * MAP_H;
     });
 
     const mapCanvas = document.getElementById('geospatial-map-canvas');
-    const mapViewport = document.getElementById('map-viewport-group');
     const boroughLabel = document.getElementById('map-active-borough-label');
     const zoomText = document.getElementById('map-zoom-level-text');
     const mapCounter = document.getElementById('map-nodes-count');
@@ -697,9 +699,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const subInferenceP = document.getElementById('geo-spatial-sub-inference');
     const moranSpan = document.getElementById('geo-spatial-moran');
     const topReviewedContainer = document.getElementById('top-reviewed-clusters');
-    const calloutsLayer = document.getElementById('map-callouts-layer');
 
     const ctx = mapCanvas ? mapCanvas.getContext('2d') : null;
+
+    // Load Real NYC Base Map from New_York_City_dark.png
+    const bgMapImg = new Image();
+    bgMapImg.src = 'New_York_City_dark.png';
+    bgMapImg.onload = () => {
+      drawCanvas();
+    };
 
     // Helper: escape HTML safely
     function escapeHtml(str) {
@@ -748,16 +756,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeListings = getFilteredListings();
     let mapQuadtree = d3.quadtree().x(d => d._x).y(d => d._y).addAll(activeListings);
 
-    // High-performance batched canvas rendering
+    // High-performance batched canvas rendering with real NYC base map
     function drawCanvas() {
       if (!ctx || !mapCanvas) return;
 
       ctx.save();
-      ctx.clearRect(0, 0, 1000, 650);
+      ctx.clearRect(0, 0, MAP_W, MAP_H);
+
+      // Fill base water/ocean color
+      ctx.fillStyle = '#080f20';
+      ctx.fillRect(0, 0, MAP_W, MAP_H);
 
       // Apply D3 zoom and pan transform
       ctx.translate(currentTransform.x, currentTransform.y);
       ctx.scale(currentTransform.k, currentTransform.k);
+
+      // 1. Render Real NYC Map Base Image
+      if (bgMapImg.complete && bgMapImg.naturalWidth > 0) {
+        ctx.drawImage(bgMapImg, 0, 0, MAP_W, MAP_H);
+      }
 
       // Group active listings into 4 review tiers for ultra-fast batched drawing
       const tierLow = [];    // < 15 reviews
@@ -781,13 +798,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      const dimFactor = hasSelection ? 0.2 : 1.0;
+      const dimFactor = hasSelection ? 0.22 : 1.0;
 
       // Tier 1: Low reviews (< 15) - Cyan
       if (tierLow.length > 0) {
         ctx.fillStyle = `rgba(123, 208, 255, ${0.45 * dimFactor})`;
         ctx.beginPath();
-        const r = 1.3;
+        const r = 1.4 / Math.sqrt(currentTransform.k);
         for (let i = 0; i < tierLow.length; i++) {
           const d = tierLow[i];
           ctx.moveTo(d._x + r, d._y);
@@ -798,9 +815,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Tier 2: Mid reviews (15 - 49) - Purple
       if (tierMid.length > 0) {
-        ctx.fillStyle = `rgba(160, 120, 255, ${0.65 * dimFactor})`;
+        ctx.fillStyle = `rgba(160, 120, 255, ${0.68 * dimFactor})`;
         ctx.beginPath();
-        const r = 1.8;
+        const r = 1.9 / Math.sqrt(currentTransform.k);
         for (let i = 0; i < tierMid.length; i++) {
           const d = tierMid[i];
           ctx.moveTo(d._x + r, d._y);
@@ -809,11 +826,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
       }
 
-      // Tier 3: High reviews (50 - 99) - Coral / Hot Pink
+      // Tier 3: High reviews (50 - 99) - Coral
       if (tierHigh.length > 0) {
-        ctx.fillStyle = `rgba(255, 81, 106, ${0.85 * dimFactor})`;
+        ctx.fillStyle = `rgba(255, 81, 106, ${0.88 * dimFactor})`;
         ctx.beginPath();
-        const r = 2.6;
+        const r = 2.6 / Math.sqrt(currentTransform.k);
         for (let i = 0; i < tierHigh.length; i++) {
           const d = tierHigh[i];
           ctx.moveTo(d._x + r, d._y);
@@ -822,17 +839,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
       }
 
-      // Tier 4: Top review range (>= 100) - Radiant Coral with Glow
+      // Tier 4: Top review range (>= 100) - Radiant Rose with Glow
       if (tierTop.length > 0) {
-        ctx.fillStyle = `rgba(255, 178, 183, ${0.95 * dimFactor})`;
+        ctx.fillStyle = `rgba(255, 218, 219, ${0.95 * dimFactor})`;
+        ctx.shadowColor = '#ff516a';
+        ctx.shadowBlur = 4;
         ctx.beginPath();
-        const r = 3.4;
+        const r = 3.3 / Math.sqrt(currentTransform.k);
         for (let i = 0; i < tierTop.length; i++) {
           const d = tierTop[i];
           ctx.moveTo(d._x + r, d._y);
           ctx.arc(d._x, d._y, r, 0, Math.PI * 2);
         }
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
 
       // Highlighted Selected Neighborhood Points
@@ -841,23 +861,81 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.shadowColor = '#00a6e0';
         ctx.shadowBlur = 8;
         ctx.beginPath();
-        const r = 3.6;
+        const r = 3.6 / Math.sqrt(currentTransform.k);
         for (let i = 0; i < selectedTier.length; i++) {
           const d = selectedTier[i];
           ctx.moveTo(d._x + r, d._y);
           ctx.arc(d._x, d._y, r, 0, Math.PI * 2);
         }
         ctx.fill();
-        ctx.shadowBlur = 0; // reset shadow
+        ctx.shadowBlur = 0;
       }
+
+      // Draw Top Cluster Centroid Badges on Canvas
+      topRankedClusters.forEach((c) => {
+        const isSelected = selectedNeighborhood === c.name;
+        const color = isSelected ? '#ffffff' : (c.borough === 'Manhattan' ? '#d0bcff' : '#7bd0ff');
+        const bgColor = isSelected ? 'rgba(0, 166, 224, 0.92)' : 'rgba(23, 31, 51, 0.90)';
+        const borderColor = isSelected ? '#ffffff' : (c.borough === 'Manhattan' ? '#a078ff' : '#00a6e0');
+
+        const k = currentTransform.k;
+        const fontSize = Math.max(9, Math.min(12, 11 / Math.sqrt(k)));
+        const padX = 6 / Math.sqrt(k);
+        const padY = 3 / Math.sqrt(k);
+
+        const labelText = `${c.name}: ${(c.totalReviews / 1000).toFixed(0)}k revs`;
+        ctx.font = `600 ${fontSize}px "JetBrains Mono", monospace`;
+        const textMetrics = ctx.measureText(labelText);
+        const boxW = textMetrics.width + padX * 2 + 10;
+        const boxH = fontSize + padY * 2 + 4;
+
+        const pinX = c.centroidX;
+        const pinY = c.centroidY;
+        const boxX = pinX - boxW / 2;
+        const boxY = pinY - boxH - 6 / Math.sqrt(k);
+
+        // Pin marker
+        ctx.fillStyle = borderColor;
+        ctx.beginPath();
+        ctx.arc(pinX, pinY, 3.5 / Math.sqrt(k), 0, Math.PI * 2);
+        ctx.fill();
+
+        // Pin connecting line
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 1.2 / Math.sqrt(k);
+        ctx.beginPath();
+        ctx.moveTo(pinX, pinY);
+        ctx.lineTo(pinX, boxY + boxH);
+        ctx.stroke();
+
+        // Badge background
+        ctx.fillStyle = bgColor;
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = isSelected ? 1.5 / Math.sqrt(k) : 0.8 / Math.sqrt(k);
+        ctx.beginPath();
+        ctx.roundRect(boxX, boxY, boxW, boxH, 4 / Math.sqrt(k));
+        ctx.fill();
+        ctx.stroke();
+
+        // Badge dot
+        ctx.fillStyle = borderColor;
+        ctx.beginPath();
+        ctx.arc(boxX + padX + 3, boxY + boxH / 2, 2.5 / Math.sqrt(k), 0, Math.PI * 2);
+        ctx.fill();
+
+        // Badge text
+        ctx.fillStyle = color;
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labelText, boxX + padX + 8, boxY + boxH / 2);
+      });
 
       // Hovered point targeting ring
       if (hoveredListing) {
         ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.8 / currentTransform.k;
+        ctx.lineWidth = 2 / currentTransform.k;
         ctx.fillStyle = '#ff516a';
         ctx.beginPath();
-        ctx.arc(hoveredListing._x, hoveredListing._y, 5.5 / currentTransform.k, 0, Math.PI * 2);
+        ctx.arc(hoveredListing._x, hoveredListing._y, 6 / currentTransform.k, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       }
@@ -935,47 +1013,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (moranSpan) moranSpan.textContent = moranVal;
     }
 
-    // Dynamic Density Clusters & Callouts in SVG (Requirement 6)
-    function renderDensityCallouts() {
-      if (!calloutsLayer) return;
-
-      let calloutHtml = '';
-      topRankedClusters.forEach((c, idx) => {
-        const isSelected = selectedNeighborhood === c.name;
-        const color = c.borough === 'Manhattan' ? '#d0bcff' : '#7bd0ff';
-        const activeColor = isSelected ? '#ffffff' : color;
-        const strokeW = isSelected ? 2.5 : 1.5;
-
-        // Position offsets based on quadrant to avoid overlap
-        const isLeft = c.centroidX > 530;
-        const lineEndX = isLeft ? c.centroidX + 65 : c.centroidX - 65;
-        const lineEndY = idx % 2 === 0 ? c.centroidY + 25 : c.centroidY - 25;
-        const boxX = isLeft ? lineEndX + 4 : lineEndX - 154;
-        const boxY = lineEndY - 13;
-
-        calloutHtml += `
-          <g class="cluster-callout cursor-pointer" data-neighborhood="${c.name}">
-            <line stroke="${activeColor}" stroke-width="${strokeW}" x1="${c.centroidX.toFixed(1)}" y1="${c.centroidY.toFixed(1)}" x2="${lineEndX.toFixed(1)}" y2="${lineEndY.toFixed(1)}"></line>
-            <circle cx="${lineEndX.toFixed(1)}" cy="${lineEndY.toFixed(1)}" r="3" fill="${activeColor}"></circle>
-            <rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="150" height="26" rx="4" fill="#171f33" opacity="0.92" stroke="${isSelected ? '#7bd0ff' : '#494454'}" stroke-width="${isSelected ? 1.5 : 0.8}"></rect>
-            <text x="${(boxX + 8).toFixed(1)}" y="${(boxY + 17).toFixed(1)}" fill="${activeColor}" font-family="JetBrains Mono" font-size="10" font-weight="${isSelected ? '700' : '600'}">
-              ${c.name.length > 13 ? c.name.slice(0, 11) + '..' : c.name}: ${(c.totalReviews / 1000).toFixed(0)}k revs
-            </text>
-          </g>
-        `;
-      });
-
-      calloutsLayer.innerHTML = calloutHtml;
-
-      // Callout click handler
-      calloutsLayer.querySelectorAll('.cluster-callout').forEach(el => {
-        el.addEventListener('click', () => {
-          const neigh = el.getAttribute('data-neighborhood');
-          toggleNeighborhoodSelection(neigh);
-        });
-      });
-    }
-
     // Neighborhood Ranking UI (Requirement 7)
     function renderRankingList() {
       if (!topReviewedContainer) return;
@@ -1023,25 +1060,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleNeighborhoodSelection(neighName) {
       if (selectedNeighborhood === neighName) {
         selectedNeighborhood = null;
-        // Reset map zoom
         if (mapCanvas) {
           d3.select(mapCanvas).transition().duration(500).call(zoom.transform, d3.zoomIdentity);
         }
       } else {
         selectedNeighborhood = neighName;
-        // Smoothly zoom and center on neighborhood centroid
         const cluster = neighRollup.get(neighName);
         if (cluster && mapCanvas) {
-          const targetScale = 2.4;
-          const targetX = 500 - cluster.centroidX * targetScale;
-          const targetY = 325 - cluster.centroidY * targetScale;
+          const targetScale = 2.5;
+          const targetX = (MAP_W / 2) - cluster.centroidX * targetScale;
+          const targetY = (MAP_H / 2) - cluster.centroidY * targetScale;
           const targetTransform = d3.zoomIdentity.translate(targetX, targetY).scale(targetScale);
           d3.select(mapCanvas).transition().duration(600).call(zoom.transform, targetTransform);
         }
       }
 
       renderRankingList();
-      renderDensityCallouts();
       updateAll();
     }
 
@@ -1056,11 +1090,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // D3 Zoom & Pan (Requirement 1)
     const zoom = d3.zoom()
       .scaleExtent([0.8, 8])
+      .filter((event) => {
+        if (event.type === 'wheel') {
+          return event.ctrlKey || event.metaKey;
+        }
+        return !event.ctrlKey && !event.button;
+      })
       .on('zoom', (event) => {
         currentTransform = event.transform;
-        if (mapViewport) {
-          mapViewport.setAttribute('transform', event.transform.toString());
-        }
         drawCanvas();
         if (zoomText) {
           zoomText.textContent = `ZOOM: ${currentTransform.k.toFixed(1)}x (NYC CENSUS TRACT)`;
@@ -1073,10 +1110,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // Tooltips via Quadtree (Requirement 4)
       mapCanvas.addEventListener('mousemove', (e) => {
         const rect = mapCanvas.getBoundingClientRect();
-        const screenX = (e.clientX - rect.left) * (1000 / rect.width);
-        const screenY = (e.clientY - rect.top) * (650 / rect.height);
+        const scale = Math.min(rect.width / MAP_W, rect.height / MAP_H);
+        const offsetX = (rect.width - MAP_W * scale) / 2;
+        const offsetY = (rect.height - MAP_H * scale) / 2;
+        const screenX = (e.clientX - rect.left - offsetX) / scale;
+        const screenY = (e.clientY - rect.top - offsetY) / scale;
+
         const [dataX, dataY] = currentTransform.invert([screenX, screenY]);
-        const searchRadius = 14 / currentTransform.k;
+        const searchRadius = 16 / currentTransform.k;
         const match = mapQuadtree.find(dataX, dataY, searchRadius);
 
         if (match) {
@@ -1131,7 +1172,6 @@ document.addEventListener('DOMContentLoaded', () => {
       btnZoomReset.addEventListener('click', () => {
         selectedNeighborhood = null;
         renderRankingList();
-        renderDensityCallouts();
         d3.select(mapCanvas).transition().duration(450).call(zoom.transform, d3.zoomIdentity);
         updateAll();
       });
@@ -1148,41 +1188,31 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.className = 'borough-filter-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-secondary text-on-secondary font-medium transition-all';
 
         if (boroughLabel) {
-          if (currentBorough === 'All') {
-            boroughLabel.textContent = 'High Density Cluster: North Brooklyn';
-          } else {
-            boroughLabel.textContent = `Filtered Region: ${currentBorough}`;
-          }
+          boroughLabel.textContent = currentBorough === 'All'
+            ? 'High Density Cluster: North Brooklyn'
+            : `Focus Region: ${currentBorough}`;
         }
 
-        // Highlight selected borough silhouette in SVG basemap
-        const silhouettes = {
-          'Manhattan': 'borough-silhouette-manhattan',
-          'Brooklyn': 'borough-silhouette-brooklyn',
-          'Queens': 'borough-silhouette-queens',
-          'Bronx': 'borough-silhouette-bronx',
-          'Staten Island': 'borough-silhouette-staten-island'
-        };
-
-        Object.entries(silhouettes).forEach(([boro, id]) => {
-          const el = document.getElementById(id);
-          if (el) {
-            if (currentBorough === 'All' || currentBorough === boro) {
-              el.style.opacity = '1';
-              el.setAttribute('stroke', currentBorough === boro ? '#7bd0ff' : 'none');
-              el.setAttribute('stroke-width', currentBorough === boro ? '1.5' : '0');
-            } else {
-              el.style.opacity = '0.35';
-              el.setAttribute('stroke', 'none');
-            }
+        // Center borough view
+        if (mapCanvas) {
+          let boroTransform = d3.zoomIdentity;
+          if (currentBorough === 'Manhattan') {
+            boroTransform = d3.zoomIdentity.translate(-250, 150).scale(1.7);
+          } else if (currentBorough === 'Brooklyn') {
+            boroTransform = d3.zoomIdentity.translate(-300, -250).scale(1.7);
+          } else if (currentBorough === 'Queens') {
+            boroTransform = d3.zoomIdentity.translate(-500, -100).scale(1.5);
           }
-        });
+          d3.select(mapCanvas).transition().duration(500).call(zoom.transform, boroTransform);
+        }
 
+        selectedNeighborhood = null;
+        renderRankingList();
         updateAll();
       });
     });
 
-    // Review Filter Pill Buttons (Requirement 3)
+    // Review Filter Pill Buttons (Requirement 3: All, Highly ≥50, Top ≥100)
     const reviewButtons = document.querySelectorAll('.review-filter-btn');
     reviewButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1195,26 +1225,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Initial renders for Question 02
+    // Initial render for Geospatial
     renderRankingList();
-    renderDensityCallouts();
     updateAll();
 
     // ----------------------------------------------------
-    // PHASE 6: RESEARCH QUESTION 03 — MINIMUM NIGHTS VS AVAILABILITY SCATTER
+    // PHASE 6: RESEARCH QUESTION 03 — MINIMUM NIGHTS VS AVAILABILITY SCATTER PLOT
     // ----------------------------------------------------
     let currentQ3Room = 'all'; // 'all' | 'Entire home/apt' | 'Private room' | 'Shared room'
     let currentQ3Boro = 'All'; // 'All' | 'Manhattan' | 'Brooklyn' | 'Queens'
     let hoveredScatterListing = null;
 
+    const SCATTER_W = 800;
+    const SCATTER_H = 480;
+    const padLeft = 65, padRight = 35, padTop = 35, padBottom = 55;
+
     const pearsonBadge = document.getElementById('q3-pearson-badge');
-    const pearsonText = document.getElementById('q3-pearson-stat-text');
-    const interpretationP = document.getElementById('q3-interpretation-text');
+    const pearsonText = document.getElementById('q3-pearson-text');
+    const interpretationP = document.getElementById('q3-interpretation');
     const shortTermPctSpan = document.getElementById('q3-short-term-pct');
     const longTermPctSpan = document.getElementById('q3-long-term-pct');
     const complianceSpan = document.getElementById('q3-compliance-count');
     const q3CounterSpan = document.getElementById('q3-listing-counter');
-    const trendline = document.getElementById('scatter-trendline');
 
     const scatterCanvas = document.getElementById('scatter-canvas');
     const sCtx = scatterCanvas ? scatterCanvas.getContext('2d') : null;
@@ -1225,17 +1257,33 @@ document.addEventListener('DOMContentLoaded', () => {
       d.availability_365 !== null && !isNaN(d.availability_365) && d.availability_365 >= 0
     );
 
-    // Scale mappings matching SVG:
-    // Log scale for X: [1, 365] -> [70, 580]
-    // Linear scale for Y: [0, 365] -> [330, 30]
-    const scaleScatterX = d3.scaleLog().domain([1, 365]).range([70, 580]).clamp(true);
-    const scaleScatterY = d3.scaleLinear().domain([0, 365]).range([330, 30]);
+    // Scale mappings for 800x480 canvas:
+    // Log scale for X: [1, 365] -> [padLeft, SCATTER_W - padRight]
+    // Linear scale for Y: [0, 365] -> [SCATTER_H - padBottom, padTop]
+    const scaleScatterX = d3.scaleLog().domain([1, 365]).range([padLeft, SCATTER_W - padRight]).clamp(true);
+    const scaleScatterY = d3.scaleLinear().domain([0, 365]).range([SCATTER_H - padBottom, padTop]);
+
+    // Deterministic pseudo-random integer hash for consistent point jitter
+    function pseudoHash(val) {
+      let hash = 0;
+      const str = String(val);
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return hash;
+    }
 
     validScatterRecords.forEach(d => {
       const minN = Math.max(1, Math.min(365, d.minimum_nights));
       const avail = Math.max(0, Math.min(365, d.availability_365));
-      d._scatterX = scaleScatterX(minN);
-      d._scatterY = scaleScatterY(avail);
+      const baseX = scaleScatterX(minN);
+      const baseY = scaleScatterY(avail);
+      const h = pseudoHash(d.id || Math.random());
+      const jX = ((h % 100) / 50 - 1) * 2.8;
+      const jY = (((h >> 3) % 100) / 50 - 1) * 1.5;
+      d._scatterX = Math.max(padLeft, Math.min(SCATTER_W - padRight, baseX + jX));
+      d._scatterY = Math.max(padTop, Math.min(SCATTER_H - padBottom, baseY + jY));
     });
 
     function getFilteredScatterRecords() {
@@ -1252,12 +1300,99 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawScatterCanvas() {
       if (!sCtx || !scatterCanvas) return;
 
-      sCtx.clearRect(0, 0, 640, 400);
+      sCtx.clearRect(0, 0, SCATTER_W, SCATTER_H);
 
-      // Separate points into tiers for batched rendering:
-      // Short-stay (< 30 nights)
-      // Exactly 30 nights (cliff)
-      // Extended-stay (> 30 nights)
+      // 1. Background Fill
+      sCtx.fillStyle = '#060e20';
+      sCtx.fillRect(0, 0, SCATTER_W, SCATTER_H);
+
+      const plotLeft = padLeft;
+      const plotRight = SCATTER_W - padRight;
+      const plotTop = padTop;
+      const plotBottom = SCATTER_H - padBottom;
+      const x30 = scaleScatterX(30);
+
+      // 2. Subtle Shaded Zone: Corporate & Long-Term Compliance (X >= 30 nights)
+      sCtx.fillStyle = 'rgba(255, 81, 106, 0.05)';
+      sCtx.fillRect(x30, plotTop, plotRight - x30, plotBottom - plotTop);
+
+      // Demarcation zone label
+      sCtx.fillStyle = '#ffb2b7';
+      sCtx.font = '600 10px "JetBrains Mono", monospace';
+      sCtx.textAlign = 'right';
+      sCtx.fillText('LOCAL LAW 18 (≥30 NIGHTS COMPLIANT)', plotRight - 10, plotTop + 16);
+
+      // 3. Horizontal Gridlines & Y-Axis Labels
+      const yTicks = [0, 90, 180, 270, 365];
+      yTicks.forEach(tickVal => {
+        const yPos = scaleScatterY(tickVal);
+        sCtx.strokeStyle = '#172238';
+        sCtx.lineWidth = 1;
+        sCtx.setLineDash([3, 4]);
+        sCtx.beginPath();
+        sCtx.moveTo(plotLeft, yPos);
+        sCtx.lineTo(plotRight, yPos);
+        sCtx.stroke();
+        sCtx.setLineDash([]);
+
+        // Y-Tick Text
+        sCtx.fillStyle = '#958ea0';
+        sCtx.font = '500 11px "JetBrains Mono", monospace';
+        sCtx.textAlign = 'right';
+        sCtx.textBaseline = 'middle';
+        sCtx.fillText(`${tickVal}d`, plotLeft - 8, yPos);
+      });
+
+      // 4. Vertical Gridlines & X-Axis Labels (Log scale ticks: 1, 3, 7, 14, 30, 90, 365)
+      const xTicks = [
+        { val: 1, label: '1n' },
+        { val: 3, label: '3n' },
+        { val: 7, label: '7n' },
+        { val: 14, label: '14n' },
+        { val: 30, label: '30n', highlight: true },
+        { val: 90, label: '90n' },
+        { val: 365, label: '365n' }
+      ];
+
+      xTicks.forEach(tick => {
+        const xPos = scaleScatterX(tick.val);
+        sCtx.strokeStyle = tick.highlight ? 'rgba(255, 81, 106, 0.6)' : '#172238';
+        sCtx.lineWidth = tick.highlight ? 1.5 : 1;
+        sCtx.setLineDash(tick.highlight ? [4, 4] : [3, 4]);
+        sCtx.beginPath();
+        sCtx.moveTo(xPos, plotTop);
+        sCtx.lineTo(xPos, plotBottom);
+        sCtx.stroke();
+        sCtx.setLineDash([]);
+
+        // X-Tick Text
+        sCtx.fillStyle = tick.highlight ? '#ffb2b7' : '#958ea0';
+        sCtx.font = tick.highlight ? '700 11px "JetBrains Mono", monospace' : '500 11px "JetBrains Mono", monospace';
+        sCtx.textAlign = 'center';
+        sCtx.textBaseline = 'top';
+        sCtx.fillText(tick.label, xPos, plotBottom + 8);
+      });
+
+      // 5. Axes Solid Outer Lines
+      sCtx.strokeStyle = '#494454';
+      sCtx.lineWidth = 1.5;
+      sCtx.beginPath();
+      sCtx.moveTo(plotLeft, plotTop);
+      sCtx.lineTo(plotLeft, plotBottom);
+      sCtx.lineTo(plotRight, plotBottom);
+      sCtx.stroke();
+
+      // Axis Titles
+      sCtx.fillStyle = '#7bd0ff';
+      sCtx.font = '600 10px "JetBrains Mono", monospace';
+      sCtx.textAlign = 'left';
+      sCtx.fillText('↑ AVAILABILITY (DAYS / YEAR)', plotLeft + 6, plotTop + 14);
+
+      sCtx.fillStyle = '#958ea0';
+      sCtx.textAlign = 'center';
+      sCtx.fillText('MINIMUM NIGHTS REQUIRED (LOGARITHMIC SCALE) →', (plotLeft + plotRight) / 2, plotBottom + 32);
+
+      // 6. Separate points into tiers for batched rendering:
       const shortTier = [];
       const cliffTier = [];
       const longTier = [];
@@ -1273,11 +1408,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Draw Short-stay (< 30 nights): Cyan/Blue
+      // Draw Short-stay (< 30 nights): Soft Electric Blue
       if (shortTier.length > 0) {
-        sCtx.fillStyle = 'rgba(123, 208, 255, 0.45)';
+        sCtx.fillStyle = 'rgba(123, 208, 255, 0.38)';
         sCtx.beginPath();
-        const r = 1.8;
+        const r = 1.9;
         for (let i = 0; i < shortTier.length; i++) {
           const d = shortTier[i];
           sCtx.moveTo(d._scatterX + r, d._scatterY);
@@ -1286,11 +1421,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sCtx.fill();
       }
 
-      // Draw Extended-stay (> 30 nights): Purple/Lavender
+      // Draw Extended-stay (> 30 nights): Soft Lavender
       if (longTier.length > 0) {
-        sCtx.fillStyle = 'rgba(208, 188, 255, 0.65)';
+        sCtx.fillStyle = 'rgba(208, 188, 255, 0.58)';
         sCtx.beginPath();
-        const r = 2.4;
+        const r = 2.2;
         for (let i = 0; i < longTier.length; i++) {
           const d = longTier[i];
           sCtx.moveTo(d._scatterX + r, d._scatterY);
@@ -1299,13 +1434,13 @@ document.addEventListener('DOMContentLoaded', () => {
         sCtx.fill();
       }
 
-      // Draw 30 Nights Demarcation Cliff: Coral / Pink with glow
+      // Draw 30 Nights Demarcation Cliff: Vibrant Coral Pink
       if (cliffTier.length > 0) {
         sCtx.fillStyle = 'rgba(255, 81, 106, 0.85)';
         sCtx.shadowColor = '#ff516a';
         sCtx.shadowBlur = 4;
         sCtx.beginPath();
-        const r = 2.8;
+        const r = 2.6;
         for (let i = 0; i < cliffTier.length; i++) {
           const d = cliffTier[i];
           sCtx.moveTo(d._scatterX + r, d._scatterY);
@@ -1315,25 +1450,85 @@ document.addEventListener('DOMContentLoaded', () => {
         sCtx.shadowBlur = 0;
       }
 
-      // Hovered point targeting ring
+      // 7. Dynamic Linear Regression Trendline on Canvas
+      if (activeScatterRecords.length > 1) {
+        const meanX = d3.mean(activeScatterRecords, d => d._scatterX);
+        const meanY = d3.mean(activeScatterRecords, d => d._scatterY);
+        let num = 0, den = 0;
+        for (let i = 0; i < activeScatterRecords.length; i++) {
+          const dx = activeScatterRecords[i]._scatterX - meanX;
+          const dy = activeScatterRecords[i]._scatterY - meanY;
+          num += dx * dy;
+          den += dx * dx;
+        }
+        const m = den !== 0 ? num / den : 0;
+        const b = meanY - m * meanX;
+
+        const xStart = plotLeft;
+        const xEnd = plotRight;
+        const yStart = Math.max(plotTop, Math.min(plotBottom, m * xStart + b));
+        const yEnd = Math.max(plotTop, Math.min(plotBottom, m * xEnd + b));
+
+        // Trendline glow
+        sCtx.strokeStyle = '#00a6e0';
+        sCtx.lineWidth = 4;
+        sCtx.shadowColor = '#7bd0ff';
+        sCtx.shadowBlur = 8;
+        sCtx.beginPath();
+        sCtx.moveTo(xStart, yStart);
+        sCtx.lineTo(xEnd, yEnd);
+        sCtx.stroke();
+        sCtx.shadowBlur = 0;
+
+        // Main Trendline
+        sCtx.strokeStyle = '#7bd0ff';
+        sCtx.lineWidth = 2.2;
+        sCtx.beginPath();
+        sCtx.moveTo(xStart, yStart);
+        sCtx.lineTo(xEnd, yEnd);
+        sCtx.stroke();
+
+        // Trendline label tag
+        sCtx.fillStyle = '#7bd0ff';
+        sCtx.font = '600 10px "JetBrains Mono", monospace';
+        sCtx.textAlign = 'right';
+        sCtx.fillText(`OLS TRENDLINE (SLOPE: ${m >= 0 ? '+' : ''}${m.toFixed(2)})`, xEnd - 12, yEnd - 10);
+      }
+
+      // 8. Hover Crosshair and Point Ring
       if (hoveredScatterListing) {
+        // Crosshair to axes
+        sCtx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        sCtx.lineWidth = 1;
+        sCtx.setLineDash([2, 2]);
+        sCtx.beginPath();
+        sCtx.moveTo(plotLeft, hoveredScatterListing._scatterY);
+        sCtx.lineTo(hoveredScatterListing._scatterX, hoveredScatterListing._scatterY);
+        sCtx.lineTo(hoveredScatterListing._scatterX, plotBottom);
+        sCtx.stroke();
+        sCtx.setLineDash([]);
+
+        // Outer ring & center
         sCtx.strokeStyle = '#ffffff';
         sCtx.lineWidth = 2;
         sCtx.fillStyle = '#ff516a';
+        sCtx.shadowColor = '#ff516a';
+        sCtx.shadowBlur = 8;
         sCtx.beginPath();
         sCtx.arc(hoveredScatterListing._scatterX, hoveredScatterListing._scatterY, 6, 0, Math.PI * 2);
         sCtx.fill();
         sCtx.stroke();
+        sCtx.shadowBlur = 0;
       }
     }
 
-    // Quadtree Hover Tooltip (Requirement 2)
+    // Quadtree Hover Tooltip for Scatter (Requirement 2)
     if (scatterCanvas) {
       scatterCanvas.addEventListener('mousemove', (e) => {
         const rect = scatterCanvas.getBoundingClientRect();
-        const screenX = (e.clientX - rect.left) * (640 / rect.width);
-        const screenY = (e.clientY - rect.top) * (400 / rect.height);
-        const match = scatterQuadtree.find(screenX, screenY, 12);
+        const screenX = (e.clientX - rect.left) * (SCATTER_W / rect.width);
+        const screenY = (e.clientY - rect.top) * (SCATTER_H / rect.height);
+        const match = scatterQuadtree.find(screenX, screenY, 14);
 
         if (match) {
           hoveredScatterListing = match;
@@ -1405,34 +1600,6 @@ document.addEventListener('DOMContentLoaded', () => {
         complianceSpan.textContent = `Over ${longTerm.length.toLocaleString()} listings have minimum stays of 30+ nights compliant with Local Law 18.`;
       }
 
-      // Regression Trendline with D3 transition
-      if (trendline && totalActive > 1) {
-        const meanX = d3.mean(activeScatterRecords, d => d._scatterX);
-        const meanY = d3.mean(activeScatterRecords, d => d._scatterY);
-        let num = 0, den = 0;
-        for (let i = 0; i < totalActive; i++) {
-          const dx = activeScatterRecords[i]._scatterX - meanX;
-          const dy = activeScatterRecords[i]._scatterY - meanY;
-          num += dx * dy;
-          den += dx * dx;
-        }
-        const m = den !== 0 ? num / den : 0;
-        const b = meanY - m * meanX;
-
-        const x1 = 70;
-        const x2 = 580;
-        const y1 = Math.max(30, Math.min(330, m * x1 + b));
-        const y2 = Math.max(30, Math.min(330, m * x2 + b));
-
-        d3.select(trendline)
-          .transition()
-          .duration(450)
-          .attr('x1', x1)
-          .attr('y1', y1.toFixed(1))
-          .attr('x2', x2)
-          .attr('y2', y2.toFixed(1));
-      }
-
       // Interpretation Generation (Requirement 4: positive/negative, weak/moderate/strong, no causation)
       if (interpretationP) {
         const direction = r >= 0 ? 'positive' : 'negative';
@@ -1456,7 +1623,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Room Type Filter Buttons for Q03
+    // Room Type Filter Buttons (Requirement 5)
     const q3RoomButtons = document.querySelectorAll('.q3-room-btn');
     q3RoomButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1469,7 +1636,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Borough Filter Buttons for Q03
+    // Borough Filter Buttons for Q3
     const q3BoroButtons = document.querySelectorAll('.q3-boro-btn');
     q3BoroButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1482,7 +1649,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Initial render for Question 03
+    // Initial render for Q3
     updateScatterSection();
   }
 

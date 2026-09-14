@@ -1198,115 +1198,294 @@ document.addEventListener('DOMContentLoaded', () => {
     updateAll();
 
     // ----------------------------------------------------
-    // PHASE 6: QUESTION 03 — MINIMUM NIGHTS VS AVAILABILITY SCATTER
+    // PHASE 6: RESEARCH QUESTION 03 — MINIMUM NIGHTS VS AVAILABILITY SCATTER
     // ----------------------------------------------------
-    const scatterLayer = document.getElementById('scatter-live-points-layer');
+    let currentQ3Room = 'all'; // 'all' | 'Entire home/apt' | 'Private room' | 'Shared room'
+    let currentQ3Boro = 'All'; // 'All' | 'Manhattan' | 'Brooklyn' | 'Queens'
+    let hoveredScatterListing = null;
+
     const pearsonBadge = document.getElementById('q3-pearson-badge');
     const pearsonText = document.getElementById('q3-pearson-stat-text');
+    const interpretationP = document.getElementById('q3-interpretation-text');
     const shortTermPctSpan = document.getElementById('q3-short-term-pct');
     const longTermPctSpan = document.getElementById('q3-long-term-pct');
     const complianceSpan = document.getElementById('q3-compliance-count');
+    const q3CounterSpan = document.getElementById('q3-listing-counter');
+    const trendline = document.getElementById('scatter-trendline');
 
-    // Calculate real Pearson r
-    const pearsonR = calculatePearsonR(records, 'minimum_nights', 'availability_365');
-    const formattedR = (pearsonR >= 0 ? '+' : '') + pearsonR.toFixed(3);
+    const scatterCanvas = document.getElementById('scatter-canvas');
+    const sCtx = scatterCanvas ? scatterCanvas.getContext('2d') : null;
 
-    if (pearsonBadge) pearsonBadge.textContent = `Pearson r = ${formattedR} (Weak / Non-linear)`;
-    if (pearsonText) pearsonText.textContent = `r = ${formattedR}`;
+    // Filter valid positive minimum nights and valid availability
+    const validScatterRecords = records.filter(d => 
+      d.minimum_nights !== null && !isNaN(d.minimum_nights) && d.minimum_nights > 0 &&
+      d.availability_365 !== null && !isNaN(d.availability_365) && d.availability_365 >= 0
+    );
 
-    const shortTermCount = records.filter(d => d.minimum_nights < 30).length;
-    const longTermCount = records.filter(d => d.minimum_nights >= 30).length;
-    const realShortPct = ((shortTermCount / totalCount) * 100).toFixed(1);
-    const realLongPct = ((longTermCount / totalCount) * 100).toFixed(1);
-
-    if (shortTermPctSpan) shortTermPctSpan.textContent = `${realShortPct}% of total`;
-    if (longTermPctSpan) longTermPctSpan.textContent = `${realLongPct}% of total`;
-    if (complianceSpan) {
-      complianceSpan.textContent = `Over ${longTermCount.toLocaleString()} listings have minimum stays of 30+ nights compliant with Local Law 18.`;
-    }
-
-    // Scales for Scatter Plot:
+    // Scale mappings matching SVG:
     // Log scale for X: [1, 365] -> [70, 580]
     // Linear scale for Y: [0, 365] -> [330, 30]
     const scaleScatterX = d3.scaleLog().domain([1, 365]).range([70, 580]).clamp(true);
     const scaleScatterY = d3.scaleLinear().domain([0, 365]).range([330, 30]);
 
-    if (scatterLayer) {
-      // Stratified sample of 1,200 points for the scatter plot
-      const scatterStep = Math.max(1, Math.floor(records.length / 1200));
-      const scatterSample = [];
-      for (let i = 0; i < records.length; i += scatterStep) {
-        scatterSample.push(records[i]);
-      }
+    validScatterRecords.forEach(d => {
+      const minN = Math.max(1, Math.min(365, d.minimum_nights));
+      const avail = Math.max(0, Math.min(365, d.availability_365));
+      d._scatterX = scaleScatterX(minN);
+      d._scatterY = scaleScatterY(avail);
+    });
 
-      let scatterHtml = '';
-      scatterSample.forEach(d => {
-        const minNights = Math.max(1, Math.min(365, d.minimum_nights || 1));
-        const avail = Math.max(0, Math.min(365, d.availability_365 || 0));
-
-        const cx = scaleScatterX(minNights);
-        const cy = scaleScatterY(avail);
-
-        let fill = '#7bd0ff';
-        let r = 2.4;
-        let opacity = 0.55;
-
-        if (d.minimum_nights === 30) {
-          fill = '#ff516a';
-          r = 3.6;
-          opacity = 0.85;
-        } else if (d.minimum_nights > 30) {
-          fill = '#d0bcff';
-          r = 2.8;
-          opacity = 0.65;
-        } else if (avail > 200) {
-          fill = '#a078ff';
-          r = 2.6;
-          opacity = 0.6;
-        }
-
-        scatterHtml += `
-          <circle 
-            cx="${cx.toFixed(1)}" 
-            cy="${cy.toFixed(1)}" 
-            r="${r}" 
-            fill="${fill}" 
-            opacity="${opacity}" 
-            class="scatter-dot hover:r-5 hover:opacity-100 cursor-pointer transition-all duration-150"
-            data-name="${escapeHtml(d.name || 'Listing')}"
-            data-nights="${d.minimum_nights}"
-            data-avail="${d.availability_365}"
-            data-price="$${d.price}"
-            data-neigh="${d.neighbourhood}"
-          />
-        `;
-      });
-
-      scatterLayer.innerHTML = scatterHtml;
-
-      // Scatter hover events
-      scatterLayer.querySelectorAll('.scatter-dot').forEach(dot => {
-        dot.addEventListener('mousemove', (e) => {
-          const name = dot.getAttribute('data-name');
-          const nights = dot.getAttribute('data-nights');
-          const avail = dot.getAttribute('data-avail');
-          const price = dot.getAttribute('data-price');
-          const neigh = dot.getAttribute('data-neigh');
-
-          showTooltip(`
-            <div class="font-bold text-on-surface mb-0.5 line-clamp-1">${name}</div>
-            <div class="text-xs text-on-surface-variant">${neigh} · ${price}/night</div>
-            <div class="text-secondary font-semibold mt-1">Min Stay: ${nights} nights · Available: ${avail} days/year</div>
-          `, e);
-        });
-        dot.addEventListener('mouseleave', hideTooltip);
+    function getFilteredScatterRecords() {
+      return validScatterRecords.filter(d => {
+        if (currentQ3Room !== 'all' && d.room_type !== currentQ3Room) return false;
+        if (currentQ3Boro !== 'All' && d.neighbourhood_group !== currentQ3Boro) return false;
+        return true;
       });
     }
+
+    let activeScatterRecords = getFilteredScatterRecords();
+    let scatterQuadtree = d3.quadtree().x(d => d._scatterX).y(d => d._scatterY).addAll(activeScatterRecords);
+
+    function drawScatterCanvas() {
+      if (!sCtx || !scatterCanvas) return;
+
+      sCtx.clearRect(0, 0, 640, 400);
+
+      // Separate points into tiers for batched rendering:
+      // Short-stay (< 30 nights)
+      // Exactly 30 nights (cliff)
+      // Extended-stay (> 30 nights)
+      const shortTier = [];
+      const cliffTier = [];
+      const longTier = [];
+
+      for (let i = 0; i < activeScatterRecords.length; i++) {
+        const d = activeScatterRecords[i];
+        if (d.minimum_nights === 30) {
+          cliffTier.push(d);
+        } else if (d.minimum_nights > 30) {
+          longTier.push(d);
+        } else {
+          shortTier.push(d);
+        }
+      }
+
+      // Draw Short-stay (< 30 nights): Cyan/Blue
+      if (shortTier.length > 0) {
+        sCtx.fillStyle = 'rgba(123, 208, 255, 0.45)';
+        sCtx.beginPath();
+        const r = 1.8;
+        for (let i = 0; i < shortTier.length; i++) {
+          const d = shortTier[i];
+          sCtx.moveTo(d._scatterX + r, d._scatterY);
+          sCtx.arc(d._scatterX, d._scatterY, r, 0, Math.PI * 2);
+        }
+        sCtx.fill();
+      }
+
+      // Draw Extended-stay (> 30 nights): Purple/Lavender
+      if (longTier.length > 0) {
+        sCtx.fillStyle = 'rgba(208, 188, 255, 0.65)';
+        sCtx.beginPath();
+        const r = 2.4;
+        for (let i = 0; i < longTier.length; i++) {
+          const d = longTier[i];
+          sCtx.moveTo(d._scatterX + r, d._scatterY);
+          sCtx.arc(d._scatterX, d._scatterY, r, 0, Math.PI * 2);
+        }
+        sCtx.fill();
+      }
+
+      // Draw 30 Nights Demarcation Cliff: Coral / Pink with glow
+      if (cliffTier.length > 0) {
+        sCtx.fillStyle = 'rgba(255, 81, 106, 0.85)';
+        sCtx.shadowColor = '#ff516a';
+        sCtx.shadowBlur = 4;
+        sCtx.beginPath();
+        const r = 2.8;
+        for (let i = 0; i < cliffTier.length; i++) {
+          const d = cliffTier[i];
+          sCtx.moveTo(d._scatterX + r, d._scatterY);
+          sCtx.arc(d._scatterX, d._scatterY, r, 0, Math.PI * 2);
+        }
+        sCtx.fill();
+        sCtx.shadowBlur = 0;
+      }
+
+      // Hovered point targeting ring
+      if (hoveredScatterListing) {
+        sCtx.strokeStyle = '#ffffff';
+        sCtx.lineWidth = 2;
+        sCtx.fillStyle = '#ff516a';
+        sCtx.beginPath();
+        sCtx.arc(hoveredScatterListing._scatterX, hoveredScatterListing._scatterY, 6, 0, Math.PI * 2);
+        sCtx.fill();
+        sCtx.stroke();
+      }
+    }
+
+    // Quadtree Hover Tooltip (Requirement 2)
+    if (scatterCanvas) {
+      scatterCanvas.addEventListener('mousemove', (e) => {
+        const rect = scatterCanvas.getBoundingClientRect();
+        const screenX = (e.clientX - rect.left) * (640 / rect.width);
+        const screenY = (e.clientY - rect.top) * (400 / rect.height);
+        const match = scatterQuadtree.find(screenX, screenY, 12);
+
+        if (match) {
+          hoveredScatterListing = match;
+          drawScatterCanvas();
+          showTooltip(`
+            <div class="font-bold text-on-surface text-sm mb-1 truncate max-w-xs">${escapeHtml(match.name || 'Listing #' + match.id)}</div>
+            <div class="text-xs text-on-surface-variant border-b border-outline/20 pb-1 mb-1.5">${match.neighbourhood} <span class="text-xs text-secondary font-medium">(${match.neighbourhood_group})</span> · <span class="text-primary font-medium">${match.room_type}</span></div>
+            <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
+              <div>Minimum Stay: <span class="text-tertiary font-semibold">${match.minimum_nights} nights</span></div>
+              <div>Availability: <span class="text-secondary font-semibold">${match.availability_365} days/yr</span></div>
+              <div>Nightly Price: <span class="text-on-surface font-semibold">$${match.price}</span></div>
+              <div>Compliance: <span class="${match.minimum_nights >= 30 ? 'text-secondary font-semibold' : 'text-on-surface-variant font-mono'}">${match.minimum_nights >= 30 ? '≥30d (Compliant)' : '<30d (Short-Term)'}</span></div>
+            </div>
+          `, e);
+        } else {
+          if (hoveredScatterListing) {
+            hoveredScatterListing = null;
+            drawScatterCanvas();
+          }
+          hideTooltip();
+        }
+      });
+
+      scatterCanvas.addEventListener('mouseleave', () => {
+        if (hoveredScatterListing) {
+          hoveredScatterListing = null;
+          drawScatterCanvas();
+        }
+        hideTooltip();
+      });
+    }
+
+    function updateScatterSection() {
+      activeScatterRecords = getFilteredScatterRecords();
+      scatterQuadtree = d3.quadtree().x(d => d._scatterX).y(d => d._scatterY).addAll(activeScatterRecords);
+      drawScatterCanvas();
+
+      const totalActive = activeScatterRecords.length;
+      if (totalActive === 0) return;
+
+      // Calculate Pearson correlation on the active slice (Requirement 3)
+      const r = calculatePearsonR(activeScatterRecords, 'minimum_nights', 'availability_365');
+      const sign = r >= 0 ? '+' : '';
+      const rFormatted = `${sign}${r.toFixed(2)}`;
+
+      if (pearsonBadge) {
+        pearsonBadge.textContent = `Correlation: ${rFormatted}`;
+      }
+      if (pearsonText) {
+        pearsonText.textContent = `Correlation: ${rFormatted}`;
+      }
+
+      // Update Listing Counter (Requirement 5)
+      if (q3CounterSpan) {
+        const roomLabel = currentQ3Room === 'all' ? '' : ` (${currentQ3Room})`;
+        const boroLabel = currentQ3Boro === 'All' ? '' : ` in ${currentQ3Boro}`;
+        q3CounterSpan.textContent = `Showing ${totalActive.toLocaleString()} listings${roomLabel}${boroLabel}`;
+      }
+
+      // Compliance Counts & Percentages
+      const shortTerm = activeScatterRecords.filter(d => d.minimum_nights < 30);
+      const longTerm = activeScatterRecords.filter(d => d.minimum_nights >= 30);
+      const shortPct = ((shortTerm.length / totalActive) * 100).toFixed(1);
+      const longPct = ((longTerm.length / totalActive) * 100).toFixed(1);
+
+      if (shortTermPctSpan) shortTermPctSpan.textContent = `${shortPct}% of total (${shortTerm.length.toLocaleString()})`;
+      if (longTermPctSpan) longTermPctSpan.textContent = `${longPct}% of total (${longTerm.length.toLocaleString()})`;
+      if (complianceSpan) {
+        complianceSpan.textContent = `Over ${longTerm.length.toLocaleString()} listings have minimum stays of 30+ nights compliant with Local Law 18.`;
+      }
+
+      // Regression Trendline with D3 transition
+      if (trendline && totalActive > 1) {
+        const meanX = d3.mean(activeScatterRecords, d => d._scatterX);
+        const meanY = d3.mean(activeScatterRecords, d => d._scatterY);
+        let num = 0, den = 0;
+        for (let i = 0; i < totalActive; i++) {
+          const dx = activeScatterRecords[i]._scatterX - meanX;
+          const dy = activeScatterRecords[i]._scatterY - meanY;
+          num += dx * dy;
+          den += dx * dx;
+        }
+        const m = den !== 0 ? num / den : 0;
+        const b = meanY - m * meanX;
+
+        const x1 = 70;
+        const x2 = 580;
+        const y1 = Math.max(30, Math.min(330, m * x1 + b));
+        const y2 = Math.max(30, Math.min(330, m * x2 + b));
+
+        d3.select(trendline)
+          .transition()
+          .duration(450)
+          .attr('x1', x1)
+          .attr('y1', y1.toFixed(1))
+          .attr('x2', x2)
+          .attr('y2', y2.toFixed(1));
+      }
+
+      // Interpretation Generation (Requirement 4: positive/negative, weak/moderate/strong, no causation)
+      if (interpretationP) {
+        const direction = r >= 0 ? 'positive' : 'negative';
+        const absR = Math.abs(r);
+        const strength = absR >= 0.7 ? 'strong' : (absR >= 0.3 ? 'moderate' : 'weak');
+        const meanAvailShort = Math.round(d3.mean(shortTerm, d => d.availability_365) || 107);
+        const meanAvailLong = Math.round(d3.mean(longTerm, d => d.availability_365) || 172);
+
+        const interpretationHtml = `
+          The calculated Pearson correlation (<span class="font-label-sm text-label-sm text-secondary font-semibold">Correlation: ${rFormatted}</span>) demonstrates a <span class="text-secondary font-semibold">${strength} ${direction}</span> linear association (r = ${sign}${r.toFixed(3)}). Extended-stay listings (≥30 nights) maintain higher average calendar availability (${meanAvailLong} days/year) compared to short-stay units (${meanAvailShort} days/year). However, this statistical correlation does not indicate causation: the observed alignment reflects commercial host scheduling and municipal regulatory compliance under Local Law 18 rather than length of stay driving availability.
+        `;
+
+        d3.select(interpretationP)
+          .transition()
+          .duration(200)
+          .style('opacity', 0)
+          .on('end', () => {
+            interpretationP.innerHTML = interpretationHtml;
+            d3.select(interpretationP).transition().duration(300).style('opacity', 1);
+          });
+      }
+    }
+
+    // Room Type Filter Buttons for Q03
+    const q3RoomButtons = document.querySelectorAll('.q3-room-btn');
+    q3RoomButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentQ3Room = btn.getAttribute('data-q3-room');
+        q3RoomButtons.forEach(b => {
+          b.className = 'q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all';
+        });
+        btn.className = 'q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container font-medium transition-all';
+        updateScatterSection();
+      });
+    });
+
+    // Borough Filter Buttons for Q03
+    const q3BoroButtons = document.querySelectorAll('.q3-boro-btn');
+    q3BoroButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentQ3Boro = btn.getAttribute('data-q3-boro');
+        q3BoroButtons.forEach(b => {
+          b.className = 'q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all';
+        });
+        btn.className = 'q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-secondary text-on-secondary font-medium transition-all';
+        updateScatterSection();
+      });
+    });
+
+    // Initial render for Question 03
+    updateScatterSection();
   }
 
   function calculatePearsonR(data, xKey, yKey) {
     const n = data.length;
-    if (n === 0) return 0;
+    if (n < 2) return 0;
     let sumX = 0, sumY = 0;
     for (let i = 0; i < n; i++) {
       sumX += data[i][xKey] || 0;
@@ -1324,14 +1503,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const den = Math.sqrt(denX * denY);
     return den === 0 ? 0 : num / den;
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
   }
 });

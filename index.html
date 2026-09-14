@@ -618,12 +618,33 @@
 <span class="font-label-md text-label-md text-on-surface font-semibold block">Minimum Stay vs 365-Day Annual Availability</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant">Logarithmic X-axis scale with Local Law 18 demarcation</span>
 </div>
-<span id="q3-pearson-badge" class="px-space-sm py-1 rounded-full bg-surface-container-high text-tertiary font-label-sm text-label-sm">
-              Pearson r = +0.144 (Weak / Non-linear)
-            </span>
+<span id="q3-pearson-badge" class="px-space-sm py-1 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm font-semibold">
+  Correlation: +0.14
+</span>
+</div>
+<!-- Filter Controls Strip -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md p-space-xs rounded-xl bg-surface-container-low">
+  <!-- Room Type Filter -->
+  <div id="q3-room-filter-container" class="flex items-center gap-1 overflow-x-auto py-0.5">
+    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase mr-1 hidden sm:inline">Room:</span>
+    <button data-q3-room="all" class="q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container font-medium transition-all">All Rooms</button>
+    <button data-q3-room="Entire home/apt" class="q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Entire Home</button>
+    <button data-q3-room="Private room" class="q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Private Room</button>
+    <button data-q3-room="Shared room" class="q3-room-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Shared Room</button>
+  </div>
+  <!-- Borough / Region Filter -->
+  <div id="q3-boro-filter-container" class="flex items-center gap-1 overflow-x-auto py-0.5">
+    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase mr-1 hidden sm:inline">Region:</span>
+    <button data-q3-boro="All" class="q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-secondary text-on-secondary font-medium transition-all">All NYC</button>
+    <button data-q3-boro="Manhattan" class="q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Manhattan</button>
+    <button data-q3-boro="Brooklyn" class="q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Brooklyn</button>
+    <button data-q3-boro="Queens" class="q3-boro-btn px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Queens</button>
+  </div>
+  <!-- Listing counter -->
+  <span id="q3-listing-counter" class="font-label-sm text-label-sm text-secondary font-medium px-space-sm">Showing 48,895 listings</span>
 </div>
 <!-- Scatter Canvas -->
-<div class="w-full overflow-x-auto">
+<div id="scatter-plot-container" class="relative w-full overflow-x-auto">
 <svg id="scatter-svg" class="w-full min-w-[560px] h-[400px]" viewbox="0 0 640 400" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <lineargradient id="quadrantGrad" x1="0%" x2="0%" y1="0%" y2="100%">
@@ -665,6 +686,7 @@
 <g id="scatter-live-points-layer"></g>
 
 </svg>
+<canvas id="scatter-canvas" width="640" height="400" class="absolute inset-0 w-full h-[400px] cursor-crosshair z-10"></canvas>
 </div>
 <!-- Scatterplot Axis Footnotes -->
 <div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm pt-space-xs">
@@ -695,8 +717,8 @@
 <span class="material-symbols-outlined text-[18px]">verified</span>
 <span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Statistical Diagnosis</span>
 </div>
-<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
-              The aggregate Pearson correlation (<span id="q3-pearson-stat-text" class="font-label-sm text-label-sm text-secondary">r = +0.144</span>) demonstrates non-linear polarization: listings are heavily bifurcated between casual un-booked units (0 days availability) and dedicated full-year commercial operations (300+ days).
+<p id="q3-interpretation-text" class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+              The aggregate Pearson correlation (<span id="q3-pearson-stat-text" class="font-label-sm text-label-sm text-secondary font-semibold">Correlation: +0.14</span>) demonstrates a <span class="text-secondary font-semibold">weak positive</span> association (r = +0.144). Listings with longer minimum stays tend to maintain higher calendar availability (averaging 172 days vs 107 days for short stays). However, correlation does not indicate causation: these patterns reflect municipal regulatory thresholds under Local Law 18 rather than length of stay driving availability.
             </p>
 </div>
 <div class="p-space-md rounded-xl bg-surface-container shadow-md flex items-center gap-3">

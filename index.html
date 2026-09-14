@@ -502,6 +502,7 @@
 </g>
 </g>
 </svg>
+<canvas id="geospatial-map-canvas" width="1000" height="650" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing z-10"></canvas>
 </div>
 <!-- Sticky Monospace Coordinate Strip at Map Base -->
 <div class="w-full bg-surface-container-high/90 backdrop-blur-md px-space-md py-2 flex flex-wrap items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
@@ -510,7 +511,7 @@
 <span class="hidden md:inline">BBOX: [-74.259, 40.477, -73.700, 40.917]</span>
 </div>
 <div class="flex items-center gap-space-md">
-<span id="map-nodes-count">GEO-RESOLVED NODES: 48,895</span>
+<span id="map-nodes-count" class="text-secondary font-semibold">Showing 48,895 listings</span>
 <span id="map-zoom-level-text" class="text-secondary font-semibold">ZOOM: 1.0x (NYC CENSUS TRACT)</span>
 </div>
 </div>
@@ -583,16 +584,16 @@
 <span class="material-symbols-outlined text-[20px]">explore</span>
 <span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Spatial Pattern Inference</span>
 </div>
-<p class="font-body-md text-body-md text-on-surface mb-space-md leading-relaxed">
+<p id="geo-spatial-inference" class="font-body-md text-body-md text-on-surface mb-space-md leading-relaxed">
               High review velocity clusters around <span class="text-secondary font-medium">creative transit hubs</span> (specifically the L and G subway corridors in North Brooklyn) rather than the highest-priced Midtown Manhattan hotels.
             </p>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<p id="geo-spatial-sub-inference" class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
               Travelers favor high host responsiveness, neighborhood authenticity, and sub-$130 price points over conventional Manhattan proximity.
             </p>
 </div>
 <div class="mt-space-md pt-space-sm flex items-center justify-between">
 <span class="font-label-sm text-label-sm text-on-surface-variant">Cluster Coefficient</span>
-<span class="font-label-md text-label-md text-secondary font-semibold">Moran's I = +0.412 (p &lt; 0.001)</span>
+<span id="geo-spatial-moran" class="font-label-md text-label-md text-secondary font-semibold">Moran's I = +0.412 (p &lt; 0.001)</span>
 </div>
 </div>
 </div>

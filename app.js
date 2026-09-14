@@ -1504,4 +1504,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const den = Math.sqrt(denX * denY);
     return den === 0 ? 0 : num / den;
   }
+
+  // ----------------------------------------------------
+  // GLOBAL NAVIGATION & SMOOTH SCROLLING
+  // ----------------------------------------------------
+  const navLinks = document.querySelectorAll('header a[href^="#"], nav a[href^="#"], footer a[href^="#"], a[href^="#"]');
+  const headerProgressBar = document.getElementById('header-progress-bar');
+  const navItems = document.querySelectorAll('#main-navbar .nav-item');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (!href || !href.startsWith('#') || href === '#') return;
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        const headerOffset = 70;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        history.pushState(null, null, `#${targetId}`);
+      }
+    });
+  });
+
+  // Scroll Spy for Navbar and Progress Bar
+  const trackedSections = [
+    { id: 'overview', name: 'Overview' },
+    { id: 'pricing', name: 'Pricing' },
+    { id: 'geospatial', name: 'Geospatial' },
+    { id: 'availability', name: 'Availability' },
+    { id: 'findings', name: 'Findings' },
+    { id: 'methodology', name: 'Methodology' }
+  ];
+
+  function onScrollUpdate() {
+    // Header Progress Bar
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    if (headerProgressBar) {
+      headerProgressBar.style.width = `${scrolled}%`;
+    }
+
+    // Scroll Spy for Nav Items
+    const scrollPosition = window.pageYOffset + 120;
+    let currentActiveId = 'overview';
+
+    for (let i = 0; i < trackedSections.length; i++) {
+      const el = document.getElementById(trackedSections[i].id);
+      if (el) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if (scrollPosition >= top && scrollPosition < top + height) {
+          currentActiveId = trackedSections[i].id;
+          break;
+        } else if (scrollPosition >= top) {
+          currentActiveId = trackedSections[i].id;
+        }
+      }
+    }
+
+    navItems.forEach(item => {
+      const href = item.getAttribute('href');
+      const targetId = href ? href.substring(1) : '';
+      if (targetId === currentActiveId || (currentActiveId === 'availability' && targetId === 'correlation')) {
+        item.className = 'nav-item px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-medium rounded-full';
+        item.setAttribute('aria-current', 'page');
+      } else {
+        item.className = 'nav-item px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors';
+        item.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScrollUpdate, { passive: true });
+  onScrollUpdate();
 });

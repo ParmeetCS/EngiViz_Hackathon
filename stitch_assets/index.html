@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-dim":"#0b1326","on-tertiary-fixed":"#40000d","primary":"#d0bcff","tertiary-fixed":"#ffdadb","on-secondary-container":"#00374d","on-background":"#dae2fd","surface":"#0b1326","on-surface-variant":"#cbc3d7","primary-container":"#a078ff","secondary":"#7bd0ff","tertiary-fixed-dim":"#ffb2b7","secondary-container":"#00a6e0","on-primary":"#3c0091","on-tertiary":"#67001b","surface-container-lowest":"#060e20","inverse-primary":"#6d3bd7","inverse-on-surface":"#283044","surface-container-highest":"#2d3449","tertiary-container":"#ff516a","error-container":"#93000a","surface-variant":"#2d3449","on-secondary":"#00354a","primary-fixed":"#e9ddff","on-primary-fixed-variant":"#5516be","on-tertiary-container":"#5b0017","on-primary-container":"#340080","on-error":"#690005","outline":"#958ea0","error":"#ffb4ab","outline-variant":"#494454","surface-container":"#171f33","on-secondary-fixed-variant":"#004c69","inverse-surface":"#dae2fd","tertiary":"#ffb2b7","primary-fixed-dim":"#d0bcff","surface-container-high":"#222a3d","on-tertiary-fixed-variant":"#92002a","on-secondary-fixed":"#001e2c","on-primary-fixed":"#23005c","surface-container-low":"#131b2e","on-error-container":"#ffdad6","secondary-fixed-dim":"#7bd0ff","on-surface":"#dae2fd","background":"#0b1326","surface-tint":"#d0bcff","secondary-fixed":"#c4e7ff","surface-bright":"#31394d"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-md":"1rem","space-xl":"2.5rem","space-sm":"0.5rem","space-xs":"0.25rem",margin:"3rem",gutter:"1.5rem","margin-mobile":"1.25rem","gutter-mobile":"1rem","space-lg":"1.5rem"},fontFamily:{"headline-xl-mobile":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"label-md":["JetBrains Mono"],"body-lg":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"label-lg":["JetBrains Mono"],"label-sm":["JetBrains Mono"]},fontSize:{"headline-xl-mobile":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],"headline-md":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-xl":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.03em",fontWeight:"500"}],"body-lg":["18px",{lineHeight:"30px",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"20px",fontWeight:"400"}],"body-md":["15px",{lineHeight:"24px",fontWeight:"400"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"500"}],"label-sm":["10px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full h-0.5 bg-surface-container-high"><div class="h-full w-1/3 bg-secondary transition-all duration-300"></div></div><div class="h-16 max-w-[1440px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm" data-path="overview" href="#overview"><span class="font-headline-md text-headline-md tracking-tight text-on-surface">Airbnb Listings &amp; Reviews</span></a><span class="hidden xl:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm border-0">DATA SCIENCE / D3.JS</span></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs rounded-full bg-surface-container-low" data-active-classes="bg-primary-container text-on-primary-container font-medium rounded-full"><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-medium rounded-full" data-path="overview" href="#overview">Overview</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors" data-path="pricing-analysis" href="#pricing">Pricing</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors" data-path="geospatial-map" href="#geospatial">Geospatial</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors" data-path="correlation-matrix" href="#correlation">Correlation</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors" data-path="key-findings" href="#findings">Findings</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded-full transition-colors" data-path="methodology" href="#methodology">Methodology</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-space-xs"><a class="px-space-sm py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all" href="https://github.com" rel="noreferrer" target="_blank">GitHub</a><a class="px-space-sm py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all" data-path="dataset-source" href="#">Dataset Source</a></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface"><div class="flex flex-col w-full text-on-surface">
+<!-- ========================================================
+       1. HERO SECTION
+       ======================================================== -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest pt-8 pb-20 md:py-24 px-margin-mobile lg:px-margin">
+<!-- Abstract Geospatial Point Scatter Layer -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<svg class="w-full h-full" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 680" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient cx="45%" cy="40%" id="heroGlow" r="55%">
+<stop offset="0%" stop-color="#a078ff" stop-opacity="0.18"></stop>
+<stop offset="60%" stop-color="#7bd0ff" stop-opacity="0.04"></stop>
+<stop offset="100%" stop-color="#060e20" stop-opacity="0"></stop>
+</radialgradient>
+<pattern height="36" id="dotGrid" patternunits="userSpaceOnUse" width="36" x="0" y="0">
+<circle cx="2" cy="2" fill="#494454" fill-opacity="0.35" r="1.2"></circle>
+</pattern>
+</defs>
+<rect fill="url(#dotGrid)" height="100%" width="100%"></rect>
+<rect fill="url(#heroGlow)" height="100%" width="100%"></rect>
+<!-- Simulated WGS84 Geo point scatter clusters for NYC boroughs -->
+<g fill="#7bd0ff" opacity="0.6">
+<circle cx="680" cy="280" r="1.5"></circle><circle cx="684" cy="275" r="2.2"></circle><circle cx="690" cy="290" r="1"></circle><circle cx="700" cy="265" r="2"></circle><circle cx="712" cy="250" r="1.8"></circle>
+<circle cx="720" cy="240" r="2.5"></circle><circle cx="725" cy="235" r="1.2"></circle><circle cx="735" cy="220" r="2"></circle><circle cx="740" cy="210" r="1.5"></circle><circle cx="748" cy="195" r="2.8"></circle>
+<circle cx="752" cy="180" r="2"></circle><circle cx="760" cy="165" r="1.6"></circle>
+</g>
+<g fill="#d0bcff" opacity="0.55">
+<circle cx="740" cy="320" r="2.5"></circle><circle cx="755" cy="330" r="1.8"></circle><circle cx="770" cy="315" r="3"></circle><circle cx="785" cy="325" r="2.2"></circle><circle cx="800" cy="340" r="1.4"></circle>
+<circle cx="765" cy="350" r="2.8"></circle><circle cx="790" cy="365" r="2"></circle><circle cx="745" cy="360" r="1.5"></circle><circle cx="820" cy="330" r="1.8"></circle><circle cx="830" cy="310" r="2.2"></circle>
+</g>
+<g fill="#ffb2b7" opacity="0.45">
+<circle cx="830" cy="240" r="1.8"></circle><circle cx="850" cy="255" r="2.4"></circle><circle cx="875" cy="270" r="1.6"></circle><circle cx="860" cy="230" r="2"></circle><circle cx="910" cy="280" r="1.5"></circle>
+</g>
+<path d="M670,360 Q720,290 770,180" fill="none" opacity="0.4" stroke="#7bd0ff" stroke-dasharray="3,4" stroke-width="0.8"></path>
+<path d="M720,330 Q780,340 840,320" fill="none" opacity="0.3" stroke="#d0bcff" stroke-dasharray="2,3" stroke-width="0.8"></path>
+</svg>
+</div>
+<div class="relative max-w-[1440px] mx-auto flex flex-col items-start">
+<!-- Tech Badge Matrix -->
+<div class="flex flex-wrap items-center gap-space-xs mb-space-md">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-space-xs rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+          REACT 18
+        </span>
+<span class="inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">
+          D3.JS V7
+        </span>
+<span class="inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+          GEOSPATIAL ANALYSIS
+        </span>
+<span class="inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-tertiary font-label-sm text-label-sm">
+          NYC OPEN DATA
+        </span>
+</div>
+<!-- Main Headline & Subtitle -->
+<div class="max-w-4xl">
+<h1 class="font-headline-xl text-headline-xl tracking-tight text-on-surface mb-space-sm">
+          Airbnb Listings &amp; Reviews
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mb-space-lg leading-relaxed">
+          An investigative spatial data journalism study exploring NYC lodging economics, micro-neighborhood price elasticity, review velocity, and the supply disruptions caused by Local Law 18 across 48,895 verified listings.
+        </p>
+</div>
+<!-- Stat Callout Block & CTA Strip -->
+<div class="w-full flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-md pb-space-lg">
+<div class="flex flex-wrap items-center gap-space-md p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Analyzed Population</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">48,895</span>
+</div>
+<div class="w-px h-10 bg-surface-container-highest hidden sm:block"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Benchmark Window</span>
+<span class="font-label-md text-label-md text-on-surface">NYC Open Data Baseline (2019–2024)</span>
+</div>
+<div class="w-px h-10 bg-surface-container-highest hidden sm:block"></div>
+<div class="flex items-center gap-2">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary">Spatial Resolution: Lat/Long WGS84</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<a class="inline-flex items-center gap-2 px-space-md py-space-sm rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-fixed-dim transition-all shadow-md" href="#overview">
+<span>Explore the Data</span>
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</a>
+<a class="inline-flex items-center gap-2 px-space-md py-space-sm rounded-full bg-surface-container-high text-on-surface hover:bg-surface-variant font-label-md text-label-md transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[18px]">code</span>
+<span>View Code on GitHub</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       2. DATASET OVERVIEW (7 METRIC CARDS)
+       ======================================================== -->
+<section class="w-full bg-surface py-space-xl px-margin-mobile lg:px-margin" id="overview">
+<div class="max-w-[1440px] mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-xs">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">DATASET METRICS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Dataset at a Glance</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+          Parametric aggregations across all 5 boroughs prior to regulatory scrub. Outlier bounds clamped to 99th percentile ($1,200/night).
+        </p>
+</div>
+<!-- 7 KPI Metric Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-space-sm">
+<!-- Card 1: Total Listings -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Listings</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">apartment</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">48,895</div>
+<span class="font-label-sm text-label-sm text-secondary">100% Corpus</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<svg class="w-full h-5" viewbox="0 0 100 20">
+<path d="M0,15 L20,12 L40,14 L60,8 L80,10 L100,5" fill="none" stroke="#7bd0ff" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card 2: Average Price -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Mean Price</span>
+<span class="material-symbols-outlined text-[16px] text-primary">payments</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">$152.72</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">per night (USD)</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<svg class="w-full h-5" viewbox="0 0 100 20">
+<path d="M0,18 L25,16 L50,11 L75,7 L100,4" fill="none" stroke="#d0bcff" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card 3: Median Price -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Median Price</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">stacked_line_chart</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">$106.00</div>
+<span class="font-label-sm text-label-sm text-tertiary">-30.5% vs Mean</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<svg class="w-full h-5" viewbox="0 0 100 20">
+<path d="M0,10 L30,10 L60,11 L80,9 L100,10" fill="none" stroke="#7bd0ff" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card 4: Avg Reviews -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Mean Reviews</span>
+<span class="material-symbols-outlined text-[16px] text-primary">rate_review</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">23.27</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">revs / listing</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<svg class="w-full h-5" viewbox="0 0 100 20">
+<path d="M0,16 L20,15 L40,11 L60,13 L80,6 L100,2" fill="none" stroke="#d0bcff" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card 5: Avg Availability -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Availability</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">112.8 d</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">days / 365/year</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<svg class="w-full h-5" viewbox="0 0 100 20">
+<path d="M0,8 L25,12 L50,15 L75,10 L100,9" fill="none" stroke="#7bd0ff" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card 6: Unique Neighborhoods -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Micro-Regions</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">map</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">221</div>
+<span class="font-label-sm text-label-sm text-tertiary">Across 5 Boroughs</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<div class="flex items-center gap-1 w-full h-5">
+<span class="h-2 w-1/3 bg-secondary rounded-sm"></span>
+<span class="h-2 w-1/3 bg-primary rounded-sm"></span>
+<span class="h-2 w-1/4 bg-tertiary rounded-sm"></span>
+<span class="h-2 w-1/12 bg-surface-container-highest rounded-sm"></span>
+</div>
+</div>
+</div>
+<!-- Card 7: Dominant Room Type -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase">Dominant Type</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">home</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold truncate">Entire Home</div>
+<span class="font-label-sm text-label-sm text-secondary">52.0% of Market</span>
+</div>
+<div class="mt-space-sm pt-space-xs">
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden flex">
+<div class="bg-secondary h-full" style="width: 52%;"></div>
+<div class="bg-primary h-full" style="width: 45.7%;"></div>
+<div class="bg-tertiary h-full" style="width: 2.3%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       3. RESEARCH QUESTION 01 – PRICING ACROSS NEIGHBORHOODS
+       ======================================================== -->
+<section class="w-full bg-surface-container-lowest py-space-xl px-margin-mobile lg:px-margin" id="pricing">
+<div class="max-w-[1440px] mx-auto">
+<!-- Section Header -->
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">01 — PRICING ACROSS NEIGHBORHOODS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">How do prices vary across different neighborhoods and room types?</h2>
+</div>
+<!-- Controls Strip -->
+<div class="flex flex-wrap items-center justify-between gap-space-md mb-space-lg p-space-sm rounded-xl bg-surface-container">
+<!-- Metric Toggle -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-full">
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-secondary text-on-secondary shadow-sm transition-all" id="btn-median-price">
+            Median Price
+          </button>
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" id="btn-avg-price">
+            Average Price
+          </button>
+</div>
+<!-- Room Type Tabs -->
+<div class="flex items-center gap-1 overflow-x-auto py-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mr-2 hidden sm:inline">Filter Type:</span>
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-primary-container text-on-primary-container">All Rooms</button>
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface">Entire Home</button>
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface">Private Room</button>
+<button class="px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface">Shared Room</button>
+</div>
+</div>
+<!-- Main Visual Grid: Neighborhood Bar Chart + Room Composition -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Main SVG Horizontal Bar Chart (8 cols) -->
+<div class="lg:col-span-8 p-space-lg rounded-xl bg-surface-container shadow-md">
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Top Ranked Neighborhoods by Price ($ USD / night)</span>
+<span class="font-label-sm text-label-sm text-secondary">Sorted descending</span>
+</div>
+<!-- SVG Bar Chart -->
+<div class="w-full overflow-x-auto">
+<svg class="w-full min-w-[540px] h-[380px]" viewbox="0 0 640 380" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="barGradPrimary" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#340080"></stop>
+<stop offset="70%" stop-color="#a078ff"></stop>
+<stop offset="100%" stop-color="#d0bcff"></stop>
+</lineargradient>
+<lineargradient id="barGradSecondary" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#004c69"></stop>
+<stop offset="80%" stop-color="#00a6e0"></stop>
+<stop offset="100%" stop-color="#7bd0ff"></stop>
+</lineargradient>
+</defs>
+<!-- Gridlines -->
+<line stroke="#2d3449" stroke-dasharray="2,3" stroke-width="1" x1="160" x2="160" y1="20" y2="340"></line>
+<line stroke="#2d3449" stroke-dasharray="2,3" stroke-width="1" x1="280" x2="280" y1="20" y2="340"></line>
+<line stroke="#2d3449" stroke-dasharray="2,3" stroke-width="1" x1="400" x2="400" y1="20" y2="340"></line>
+<line stroke="#2d3449" stroke-dasharray="2,3" stroke-width="1" x1="520" x2="520" y1="20" y2="340"></line>
+<!-- Axis Labels Top -->
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="160" y="14">$100</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="280" y="14">$200</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="400" y="14">$300</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="520" y="14">$400</text>
+<!-- Row 1: Tribeca ($390) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="44">Tribeca</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="370" x="150" y="30"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="528" y="44">$390</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="575" y="44">177 listings</text>
+<!-- Row 2: Battery Park City ($365) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="78">Battery Park City</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="345" x="150" y="64"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="503" y="78">$365</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="550" y="78">70 listings</text>
+<!-- Row 3: DUMBO ($320) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="112">DUMBO</text>
+<rect fill="url(#barGradSecondary)" height="20" rx="4" width="300" x="150" y="98"></rect>
+<text fill="#7bd0ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="458" y="112">$320</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="505" y="112">36 listings</text>
+<!-- Row 4: Greenwich Village ($295) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="146">Greenwich Village</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="275" x="150" y="132"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="433" y="146">$295</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="480" y="146">392 listings</text>
+<!-- Row 5: SoHo ($280) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="180">SoHo</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="260" x="150" y="166"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="418" y="180">$280</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="465" y="180">358 listings</text>
+<!-- Row 6: Midtown ($245) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="214">Midtown</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="225" x="150" y="200"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="383" y="214">$245</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="430" y="214">1,545 listings</text>
+<!-- Row 7: Williamsburg ($190) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="248">Williamsburg</text>
+<rect fill="url(#barGradSecondary)" height="20" rx="4" width="170" x="150" y="234"></rect>
+<text fill="#7bd0ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="328" y="248">$190</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="375" y="248">3,920 listings</text>
+<!-- Row 8: Harlem ($125) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="282">Harlem</text>
+<rect fill="url(#barGradPrimary)" height="20" rx="4" width="105" x="150" y="268"></rect>
+<text fill="#d0bcff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="263" y="282">$125</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="310" y="282">2,658 listings</text>
+<!-- Row 9: Bushwick ($95) -->
+<text fill="#dae2fd" font-family="JetBrains Mono" font-size="12" text-anchor="end" x="145" y="316">Bushwick</text>
+<rect fill="url(#barGradSecondary)" height="20" rx="4" width="75" x="150" y="302"></rect>
+<text fill="#7bd0ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="233" y="316">$95</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" x="280" y="316">2,465 listings</text>
+<!-- Base Line -->
+<line stroke="#494454" stroke-width="1.5" x1="150" x2="150" y1="20" y2="330"></line>
+</svg>
+</div>
+</div>
+<!-- Secondary Donut Breakdown + Key Insight (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Room Type Donut Breakdown -->
+<div class="p-space-md rounded-xl bg-surface-container shadow-md">
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-space-sm">Room Type Distribution</span>
+<div class="flex items-center justify-center my-space-sm">
+<svg class="w-36 h-36" viewbox="0 0 100 100">
+<!-- Donut Segments -->
+<!-- Entire Home: 52% (dasharray ~163.3 of 314.16) -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#7bd0ff" stroke-dasharray="163.3 314.16" stroke-dashoffset="78.5" stroke-width="14"></circle>
+<!-- Private Room: 45.7% (dasharray ~143.5) -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#a078ff" stroke-dasharray="143.5 314.16" stroke-dashoffset="-84.8" stroke-width="14"></circle>
+<!-- Shared Room: 2.3% (dasharray ~7.2) -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#ffb2b7" stroke-dasharray="7.2 314.16" stroke-dashoffset="-228.3" stroke-width="14"></circle>
+<text fill="#dae2fd" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" text-anchor="middle" x="50" y="48">48,895</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="6" text-anchor="middle" x="50" y="59">LISTINGS</text>
+</svg>
+</div>
+<!-- Legend with Average Price per Type -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Entire home/apt</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm font-semibold text-secondary">52.0%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-2">($211 avg)</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Private room</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm font-semibold text-primary">45.7%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-2">($89 avg)</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Shared room</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm font-semibold text-tertiary">2.3%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-2">($70 avg)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Insight Card -->
+<div class="p-space-md rounded-xl bg-surface-container-high shadow-md">
+<div class="flex items-center gap-2 text-secondary mb-2">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Key Insight</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+              Extreme price skew in Lower Manhattan waterfront districts: median price is <span class="text-secondary font-semibold">44% lower</span> than the calculated mean due to luxury penthouse outliers peaking at $10,000/night.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       4. RESEARCH QUESTION 02 – GEOSPATIAL CLUSTERS (CENTERPIECE)
+       ======================================================== -->
+<section class="w-full bg-surface py-space-xl px-margin-mobile lg:px-margin" id="geospatial">
+<div class="max-w-[1440px] mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-xs">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">02 — GEOSPATIAL CLUSTERS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Where Are Highly Reviewed Listings Located?</h2>
+</div>
+<div class="inline-flex items-center gap-2 px-space-sm py-space-xs rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+          Interactive Map Canvas (Mercator NYC WGS84)
+        </div>
+</div>
+<!-- FULL-WIDTH INTERACTIVE GEOSPATIAL MAP SIMULATION -->
+<div class="relative w-full rounded-2xl overflow-hidden bg-surface-container-lowest shadow-xl">
+<!-- Floating Map HUD Controls (Top-Left) -->
+<div class="absolute top-4 left-4 z-20 flex flex-col gap-2">
+<!-- Borough Filter Pill Group -->
+<div class="flex items-center gap-1 p-1 rounded-full bg-surface/90 backdrop-blur-md shadow-md">
+<button class="px-space-sm py-0.5 rounded-full font-label-sm text-label-sm bg-secondary text-on-secondary font-medium">All NYC</button>
+<button class="px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Manhattan</button>
+<button class="px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Brooklyn</button>
+<button class="px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all">Queens</button>
+</div>
+<!-- Zoom Controller -->
+<div class="flex items-center gap-1 p-1 rounded-lg bg-surface/90 backdrop-blur-md shadow-md w-max">
+<button class="w-7 h-7 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface text-sm">+</button>
+<button class="w-7 h-7 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface text-sm">-</button>
+<button class="px-2 h-7 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center font-label-sm text-label-sm text-on-surface-variant">Reset</button>
+</div>
+</div>
+<!-- Floating HUD Legend (Top-Right) -->
+<div class="absolute top-4 right-4 z-20 p-space-sm rounded-xl bg-surface/90 backdrop-blur-md shadow-md max-w-xs hidden sm:block">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Review Intensity Heatmap</span>
+<div class="h-2 w-full rounded-full bg-gradient-to-r from-secondary via-primary to-tertiary-container mb-1"></div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>0</span>
+<span>150</span>
+<span>300</span>
+<span>600+ revs</span>
+</div>
+<div class="mt-2 pt-2 flex items-center gap-1.5 text-tertiary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span>High Density Cluster: North Brooklyn</span>
+</div>
+</div>
+<!-- SVG Map Rendering Viewport -->
+<div class="w-full h-[520px] md:h-[620px] flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Heatmap radial gradient hot-zones -->
+<radialgradient cx="50%" cy="50%" id="hotspotBklyn" r="50%">
+<stop offset="0%" stop-color="#ff516a" stop-opacity="0.85"></stop>
+<stop offset="40%" stop-color="#a078ff" stop-opacity="0.5"></stop>
+<stop offset="70%" stop-color="#7bd0ff" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#0b1326" stop-opacity="0"></stop>
+</radialgradient>
+<radialgradient cx="50%" cy="50%" id="hotspotEVill" r="50%">
+<stop offset="0%" stop-color="#ff516a" stop-opacity="0.75"></stop>
+<stop offset="50%" stop-color="#a078ff" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#0b1326" stop-opacity="0"></stop>
+</radialgradient>
+<radialgradient cx="50%" cy="50%" id="hotspotHarlem" r="50%">
+<stop offset="0%" stop-color="#a078ff" stop-opacity="0.65"></stop>
+<stop offset="60%" stop-color="#7bd0ff" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#0b1326" stop-opacity="0"></stop>
+</radialgradient>
+</defs>
+<!-- Coordinate Grid Lines -->
+<g stroke="#171f33" stroke-dasharray="3,6" stroke-width="0.75">
+<line x1="100" x2="100" y1="0" y2="650"></line><line x1="300" x2="300" y1="0" y2="650"></line>
+<line x1="500" x2="500" y1="0" y2="650"></line><line x1="700" x2="700" y1="0" y2="650"></line>
+<line x1="900" x2="900" y1="0" y2="650"></line><line x1="0" x2="1000" y1="150" y2="150"></line>
+<line x1="0" x2="1000" y1="350" y2="350"></line><line x1="0" x2="1000" y1="550" y2="550"></line>
+</g>
+<!-- NYC Waterways / Hudson & East River path representation -->
+<!-- Staten Island Silhouette -->
+<path d="M120,440 L210,400 L250,460 L230,550 L160,570 L110,500 Z" fill="#131b2e" opacity="0.6"></path>
+<text fill="#494454" font-family="JetBrains Mono" font-size="11" x="175" y="480">STATEN ISLAND</text>
+<!-- Manhattan Borough Silhouette -->
+<path d="M430,360 L460,340 L515,190 L530,120 L515,90 L480,120 L445,210 L410,340 Z" fill="#171f33"></path>
+<text fill="#494454" font-family="JetBrains Mono" font-size="11" transform="rotate(-65 450,240)" x="450" y="240">MANHATTAN</text>
+<!-- The Bronx Borough Silhouette -->
+<path d="M520,70 L580,50 L640,65 L650,130 L590,145 L540,110 Z" fill="#131b2e" opacity="0.7"></path>
+<text fill="#494454" font-family="JetBrains Mono" font-size="11" x="580" y="95">THE BRONX</text>
+<!-- Queens Borough Silhouette -->
+<path d="M540,150 L640,150 L750,220 L780,310 L700,340 L600,280 L520,240 Z" fill="#131b2e" opacity="0.8"></path>
+<text fill="#494454" font-family="JetBrains Mono" font-size="11" x="640" y="240">QUEENS</text>
+<!-- Brooklyn Borough Silhouette -->
+<path d="M455,360 L515,310 L585,340 L640,430 L580,530 L480,510 L430,420 Z" fill="#171f33"></path>
+<text fill="#494454" font-family="JetBrains Mono" font-size="11" x="520" y="440">BROOKLYN</text>
+<!-- Density Heatmap Glow Radii -->
+<!-- Williamsburg / Greenpoint Cluster -->
+<ellipse cx="505" cy="335" fill="url(#hotspotBklyn)" rx="60" ry="40"></ellipse>
+<!-- Bedford-Stuyvesant Cluster -->
+<ellipse cx="535" cy="375" fill="url(#hotspotBklyn)" opacity="0.8" rx="55" ry="38"></ellipse>
+<!-- East Village / Lower East Side Cluster -->
+<ellipse cx="465" cy="325" fill="url(#hotspotEVill)" rx="40" ry="28"></ellipse>
+<!-- Harlem Cluster -->
+<ellipse cx="495" cy="165" fill="url(#hotspotHarlem)" rx="35" ry="25"></ellipse>
+<!-- Astoria Hotspot -->
+<ellipse cx="545" cy="205" fill="url(#hotspotHarlem)" opacity="0.5" rx="30" ry="20"></ellipse>
+<!-- Point Cloud Scatter (Sample representative cluster nodes) -->
+<!-- Dense North Brooklyn scatter -->
+<g fill="#ffdadb">
+<circle cx="500" cy="330" r="2.5"></circle><circle cx="506" cy="328" r="3"></circle><circle cx="512" cy="335" r="2.2"></circle><circle cx="498" cy="340" r="2.8"></circle>
+<circle cx="522" cy="338" r="3.2"></circle><circle cx="528" cy="345" r="2"></circle><circle cx="515" cy="350" r="2.5"></circle><circle cx="535" cy="360" r="3"></circle>
+<circle cx="542" cy="370" r="2.7"></circle><circle cx="548" cy="365" r="3.5"></circle><circle cx="530" cy="380" r="2.2"></circle><circle cx="538" cy="388" r="2.8"></circle>
+<circle cx="550" cy="382" r="3.1"></circle><circle cx="525" cy="392" r="2"></circle><circle cx="560" cy="375" r="2.4"></circle><circle cx="510" cy="360" r="2.6"></circle>
+</g>
+<!-- Lower Manhattan scatter -->
+<g fill="#7bd0ff">
+<circle cx="458" cy="330" r="2.5"></circle><circle cx="465" cy="322" r="3.2"></circle><circle cx="472" cy="315" r="2"></circle><circle cx="462" cy="338" r="2.8"></circle>
+<circle cx="450" cy="345" r="2.2"></circle><circle cx="445" cy="352" r="1.8"></circle><circle cx="468" cy="305" r="2.4"></circle><circle cx="475" cy="290" r="2.1"></circle>
+<circle cx="482" cy="275" r="2.5"></circle><circle cx="490" cy="250" r="2.8"></circle><circle cx="485" cy="235" r="2"></circle><circle cx="498" cy="210" r="2.6"></circle>
+</g>
+<!-- Harlem & Upper Manhattan scatter -->
+<g fill="#d0bcff">
+<circle cx="492" cy="170" r="2.8"></circle><circle cx="496" cy="160" r="3.1"></circle><circle cx="502" cy="155" r="2.2"></circle><circle cx="488" cy="178" r="2.5"></circle>
+<circle cx="505" cy="145" r="2"></circle><circle cx="512" cy="135" r="2.4"></circle><circle cx="518" cy="120" r="2.8"></circle>
+</g>
+<!-- Queens scatter -->
+<g fill="#7bd0ff" opacity="0.7">
+<circle cx="540" cy="210" r="2.2"></circle><circle cx="550" cy="200" r="2.6"></circle><circle cx="562" cy="215" r="2"></circle><circle cx="575" cy="230" r="2.4"></circle>
+<circle cx="585" cy="250" r="1.8"></circle><circle cx="610" cy="265" r="2.5"></circle><circle cx="630" cy="285" r="2.1"></circle>
+</g>
+<!-- Hotspot Annotation Callouts -->
+<g>
+<!-- Callout: Bedford-Stuyvesant -->
+<line stroke="#ffb2b7" stroke-width="1.5" x1="555" x2="630" y1="375" y2="400"></line>
+<circle cx="630" cy="400" fill="#ffb2b7" r="3"></circle>
+<rect fill="#171f33" height="28" opacity="0.9" rx="4" width="180" x="635" y="386"></rect>
+<text fill="#ffb2b7" font-family="JetBrains Mono" font-size="11" font-weight="600" x="643" y="404">Bed-Stuy: 110k reviews</text>
+<!-- Callout: Williamsburg -->
+<line stroke="#7bd0ff" stroke-width="1.5" x1="510" x2="350" y1="325" y2="300"></line>
+<circle cx="350" cy="300" fill="#7bd0ff" r="3"></circle>
+<rect fill="#171f33" height="28" opacity="0.9" rx="4" width="165" x="180" y="286"></rect>
+<text fill="#7bd0ff" font-family="JetBrains Mono" font-size="11" font-weight="600" x="188" y="304">Williamsburg: 85k revs</text>
+</g>
+</svg>
+</div>
+<!-- Sticky Monospace Coordinate Strip at Map Base -->
+<div class="w-full bg-surface-container-high/90 backdrop-blur-md px-space-md py-2 flex flex-wrap items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span>PROJECTION: EPSG:4326 (WGS84)</span>
+<span class="hidden md:inline">BBOX: [-74.259, 40.477, -73.700, 40.917]</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span>GEO-RESOLVED NODES: 48,895</span>
+<span class="text-secondary font-semibold">ZOOM: 11.4x (NYC CENSUS TRACT)</span>
+</div>
+</div>
+</div>
+<!-- Below Map: Highly Reviewed Listings Neighborhood Ranking & Insight Note -->
+<div class="mt-space-lg grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Ranking Table / Bars (7 cols) -->
+<div class="lg:col-span-7 p-space-md rounded-xl bg-surface-container shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Cumulative Reviews by Neighborhood (Top 5 Clusters)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total count</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Rank 1: Bed-Stuy -->
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">1. Bedford-Stuyvesant (Brooklyn)</span>
+<span class="text-secondary font-semibold">110,352 reviews</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-secondary-container to-secondary h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Rank 2: Williamsburg -->
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">2. Williamsburg (Brooklyn)</span>
+<span class="text-secondary font-semibold">85,420 reviews</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-secondary-container to-secondary h-full rounded-full" style="width: 77.4%;"></div>
+</div>
+</div>
+<!-- Rank 3: Harlem -->
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">3. Harlem (Manhattan)</span>
+<span class="text-primary font-semibold">75,132 reviews</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-primary-container to-primary h-full rounded-full" style="width: 68.1%;"></div>
+</div>
+</div>
+<!-- Rank 4: Bushwick -->
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">4. Bushwick (Brooklyn)</span>
+<span class="text-secondary font-semibold">52,140 reviews</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-secondary-container to-secondary h-full rounded-full" style="width: 47.2%;"></div>
+</div>
+</div>
+<!-- Rank 5: Hell's Kitchen -->
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">5. Hell's Kitchen (Manhattan)</span>
+<span class="text-primary font-semibold">50,224 reviews</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-primary-container to-primary h-full rounded-full" style="width: 45.5%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Geospatial Analytical Takeaway (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between p-space-md rounded-xl bg-surface-container-high shadow-sm">
+<div>
+<div class="flex items-center gap-2 text-primary mb-space-sm">
+<span class="material-symbols-outlined text-[20px]">explore</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Spatial Pattern Inference</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-md leading-relaxed">
+              High review velocity clusters around <span class="text-secondary font-medium">creative transit hubs</span> (specifically the L and G subway corridors in North Brooklyn) rather than the highest-priced Midtown Manhattan hotels.
+            </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Travelers favor high host responsiveness, neighborhood authenticity, and sub-$130 price points over conventional Manhattan proximity.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Cluster Coefficient</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">Moran's I = +0.412 (p &lt; 0.001)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       5. RESEARCH QUESTION 03 – MINIMUM NIGHTS VS AVAILABILITY
+       ======================================================== -->
+<section class="w-full bg-surface-container-lowest py-space-xl px-margin-mobile lg:px-margin" id="correlation">
+<div class="max-w-[1440px] mx-auto">
+<!-- Section Header -->
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">03 — REGULATORY IMPACT &amp; AVAILABILITY</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">What is the correlation between minimum nights and listing availability?</h2>
+</div>
+<!-- Main Visual Grid: Scatter Plot + Narrative Analytics -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- D3-style Scatter Plot Simulation (8 cols) -->
+<div class="lg:col-span-8 p-space-lg rounded-xl bg-surface-container shadow-md">
+<div class="flex flex-wrap items-center justify-between mb-space-md gap-2">
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block">Minimum Stay vs 365-Day Annual Availability</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Logarithmic X-axis scale with Local Law 18 demarcation</span>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-surface-container-high text-tertiary font-label-sm text-label-sm">
+              Pearson r = -0.082 (Weak / Non-linear)
+            </span>
+</div>
+<!-- Scatter Canvas -->
+<div class="w-full overflow-x-auto">
+<svg class="w-full min-w-[560px] h-[400px]" viewbox="0 0 640 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="quadrantGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ff516a" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#ff516a" stop-opacity="0.02"></stop>
+</lineargradient>
+</defs>
+<!-- Quadrant Shading: Corporate Long-Term (>30 nights, >180 days avail) -->
+<rect fill="url(#quadrantGrad)" height="150" rx="6" width="230" x="360" y="30"></rect>
+<text fill="#ffb2b7" font-family="JetBrains Mono" font-size="10" font-weight="600" x="370" y="50">CORPORATE / EXTENDED STAYS (&gt;30d)</text>
+<!-- Axis Grid Lines -->
+<line stroke="#494454" stroke-width="1.5" x1="60" x2="60" y1="30" y2="330"></line>
+<line stroke="#494454" stroke-width="1.5" x1="60" x2="610" y1="330" y2="330"></line>
+<line stroke="#2d3449" stroke-dasharray="2,4" stroke-width="1" x1="60" x2="610" y1="255" y2="255"></line>
+<line stroke="#2d3449" stroke-dasharray="2,4" stroke-width="1" x1="60" x2="610" y1="180" y2="180"></line>
+<line stroke="#2d3449" stroke-dasharray="2,4" stroke-width="1" x1="60" x2="610" y1="105" y2="105"></line>
+<line stroke="#2d3449" stroke-dasharray="2,4" stroke-width="1" x1="60" x2="610" y1="30" y2="30"></line>
+<!-- Y-Axis Labels (Availability: 0 to 365 days) -->
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="50" y="334">0d</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="50" y="259">90d</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="50" y="184">180d</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="50" y="109">270d</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="50" y="34">365d</text>
+<!-- X-Axis Labels (Min Nights: 1, 3, 7, 14, 30, 90, 365) -->
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="70" y="348">1n</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="140" y="348">3n</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="210" y="348">7n</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="280" y="348">14n</text>
+<text fill="#ffb2b7" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle" x="360" y="348">30n</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="470" y="348">90n</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="580" y="348">365n</text>
+<!-- Regulatory Red Line at 30 Nights -->
+<line stroke="#ff516a" stroke-dasharray="4,4" stroke-width="2" x1="360" x2="360" y1="30" y2="330"></line>
+<text fill="#ff516a" font-family="JetBrains Mono" font-size="9" transform="rotate(-90 365,310)" x="365" y="310">Local Law 18 Threshold (30 Days)</text>
+<!-- Regression Trendline (Slight downward slope) -->
+<line stroke="#7bd0ff" stroke-width="1.8" x1="70" x2="580" y1="210" y2="240"></line>
+<!-- Scatter Dots Cloud (Simulated data distribution) -->
+<!-- Cluster 1: 1-3 nights weekend casual stays with zero/low availability -->
+<g fill="#7bd0ff" opacity="0.6">
+<circle cx="70" cy="325" r="3"></circle><circle cx="72" cy="315" r="2.5"></circle><circle cx="74" cy="328" r="4"></circle><circle cx="68" cy="320" r="3"></circle><circle cx="75" cy="310" r="2.8"></circle>
+<circle cx="85" cy="322" r="3"></circle><circle cx="90" cy="326" r="3.5"></circle><circle cx="78" cy="300" r="2"></circle><circle cx="73" cy="290" r="3.2"></circle><circle cx="82" cy="275" r="2.5"></circle>
+<circle cx="140" cy="325" r="3"></circle><circle cx="145" cy="318" r="3.2"></circle><circle cx="138" cy="328" r="2.5"></circle><circle cx="150" cy="280" r="3"></circle><circle cx="142" cy="260" r="2.2"></circle>
+</g>
+<!-- Cluster 2: 1-7 nights full availability (Commercial short term) -->
+<g fill="#a078ff" opacity="0.65">
+<circle cx="70" cy="50" r="3.2"></circle><circle cx="75" cy="65" r="2.8"></circle><circle cx="82" cy="40" r="3.5"></circle><circle cx="90" cy="55" r="2.5"></circle>
+<circle cx="140" cy="45" r="3"></circle><circle cx="145" cy="60" r="3.2"></circle><circle cx="152" cy="75" r="2"></circle><circle cx="160" cy="50" r="3.5"></circle>
+<circle cx="210" cy="45" r="2.8"></circle><circle cx="215" cy="70" r="3"></circle><circle cx="220" cy="90" r="2.4"></circle><circle cx="228" cy="55" r="3.2"></circle>
+</g>
+<!-- Mid-band scatter -->
+<g fill="#dae2fd" opacity="0.45">
+<circle cx="95" cy="190" r="2"></circle><circle cx="110" cy="160" r="2.5"></circle><circle cx="130" cy="180" r="2.2"></circle><circle cx="170" cy="140" r="2"></circle>
+<circle cx="185" cy="210" r="2.8"></circle><circle cx="230" cy="170" r="2.5"></circle><circle cx="250" cy="220" r="2.2"></circle><circle cx="270" cy="150" r="3"></circle>
+<circle cx="280" cy="180" r="2.4"></circle><circle cx="310" cy="200" r="2"></circle><circle cx="330" cy="160" r="2.8"></circle>
+</g>
+<!-- Cluster 3: THE 30-NIGHT CLIFF (Massive vertical concentration at x=360) -->
+<g fill="#ff516a" opacity="0.8">
+<circle cx="360" cy="40" r="4"></circle><circle cx="361" cy="55" r="3.8"></circle><circle cx="359" cy="70" r="4.2"></circle><circle cx="362" cy="90" r="3.5"></circle>
+<circle cx="360" cy="110" r="4"></circle><circle cx="358" cy="130" r="3.7"></circle><circle cx="361" cy="150" r="4.5"></circle><circle cx="360" cy="170" r="3.8"></circle>
+<circle cx="359" cy="195" r="4.2"></circle><circle cx="362" cy="220" r="3.6"></circle><circle cx="360" cy="245" r="4"></circle><circle cx="358" cy="270" r="3.5"></circle>
+<circle cx="361" cy="300" r="4.8"></circle><circle cx="360" cy="320" r="5"></circle>
+</g>
+<!-- Cluster 4: Long-term monthly rentals (>30d) -->
+<g fill="#d0bcff" opacity="0.55">
+<circle cx="420" cy="70" r="2.5"></circle><circle cx="440" cy="90" r="3"></circle><circle cx="460" cy="60" r="2.2"></circle><circle cx="470" cy="120" r="3.2"></circle>
+<circle cx="490" cy="80" r="2.8"></circle><circle cx="510" cy="150" r="2.5"></circle><circle cx="540" cy="70" r="3"></circle><circle cx="560" cy="110" r="2.8"></circle>
+<circle cx="580" cy="45" r="3.5"></circle><circle cx="580" cy="320" r="4"></circle>
+</g>
+</svg>
+</div>
+<!-- Scatterplot Axis Footnotes -->
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm pt-space-xs">
+<span>X-Axis: Minimum nights required by listing</span>
+<span>Y-Axis: Days available in next 365 days</span>
+</div>
+</div>
+<!-- Analytical Explanatory Sidebar (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<div class="p-space-md rounded-xl bg-surface-container shadow-md">
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-2">The Local Law 18 Threshold</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-space-sm">
+              In response to municipal short-term rental enforcement, the distribution displays a stark artificial cliff at exactly <span class="text-tertiary font-semibold">30 nights</span>.
+            </p>
+<div class="p-space-sm rounded-lg bg-surface-container-low space-y-2">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">&lt;30 Nights (Short-Term):</span>
+<span class="text-secondary font-semibold">68.4% of total</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">≥30 Nights (Long-Term):</span>
+<span class="text-tertiary font-semibold">31.6% of total</span>
+</div>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-high shadow-md">
+<div class="flex items-center gap-2 text-secondary mb-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Statistical Diagnosis</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+              The aggregate Pearson correlation (<span class="font-label-sm text-label-sm text-secondary">r = -0.082</span>) appears deceptively close to zero due to severe bimodal polarization: listings are either casual un-booked units (0 days availability) or dedicated full-year commercial operations (300+ days).
+            </p>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container shadow-md flex items-center gap-3">
+<span class="material-symbols-outlined text-[28px] text-tertiary">warning</span>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block">Regulatory Compliance Surge</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Over 14,200 listings adjusted their minimum stay to 30 nights to evade municipal fines.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       6. KEY FINDINGS (4 EDITORIAL CARDS)
+       ======================================================== -->
+<section class="w-full bg-surface py-space-xl px-margin-mobile lg:px-margin" id="findings">
+<div class="max-w-[1440px] mx-auto">
+<!-- Section Header -->
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">SYNTHESIS &amp; CONCLUSIONS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Key Research Findings</h2>
+</div>
+<!-- 4 Scholarly Editorial Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Finding 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary font-bold">FINDING 01</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">PRICE DYNAMICS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+              The Manhattan Premium &amp; Outlier Distortion
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+              Manhattan listings command a 128% average price premium over Brooklyn and Queens. Crucially, the top 1% of luxury listings (priced between $850 and $10,000/night) artificially distort the borough's mean price by +$46.72, obscuring genuine median lodging costs.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Kurtosis: 18.4 (Heavy-tailed)</span>
+<span class="text-secondary font-semibold">Mean: $196 vs Median: $150</span>
+</div>
+</div>
+<!-- Finding 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-primary font-bold">FINDING 02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">GEOGRAPHY VS REPUTATION</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+              Geographic Decoupling of Price &amp; Satisfaction
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+              Price and review density exhibit inverse spatial concentration. While Manhattan accounts for 64% of total transaction value, Brooklyn captures 54.2% of all reviews. High-velocity host engagement is strongest in Bedford-Stuyvesant, Bushwick, and Crown Heights.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Spatial Lag: ρ = -0.34</span>
+<span class="text-primary font-semibold">Brooklyn: 486k Cumulative Reviews</span>
+</div>
+</div>
+<!-- Finding 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-tertiary font-bold">FINDING 03</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">REGULATORY ENFORCEMENT</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+              The 30-Night Regulatory Cliff
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+              The enforcement of Local Law 18 created a distinct supply polarization. Casual hosts offering weekend rentals largely retreated (availability collapsed to 0), while institutional operators restructured their entire portfolios to 30-night minimum stays to operate outside hotel tax scrutiny.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Discontinuity at t = 30d</span>
+<span class="text-tertiary font-semibold">+340% Cluster Density at 30d</span>
+</div>
+</div>
+<!-- Finding 4 -->
+<div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary font-bold">FINDING 04</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">INVENTORY SEGMENTATION</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+              Room Type Economics &amp; Budget Anchors
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+              Private rooms provide 82.4% of all sub-$80 inventory in New York City. Unlike entire apartments which fluctuate wildly based on seasonal tourism, private rooms maintain steady year-round occupancy, primarily absorbing student, medical, and semi-permanent migrant housing demand.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Sub-$80 Elasticity: ε = -1.62</span>
+<span class="text-secondary font-semibold">21,661 Private Rooms</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       7. METHODOLOGY & DATA PIPELINE
+       ======================================================== -->
+<section class="w-full bg-surface-container-lowest py-space-xl px-margin-mobile lg:px-margin" id="methodology">
+<div class="max-w-[1440px] mx-auto">
+<!-- Section Header -->
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest block mb-1">DATA PIPELINE &amp; REPRODUCIBILITY</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Methodology &amp; Architecture</h2>
+</div>
+<!-- Horizontal Process Flow with Connected Nodes -->
+<div class="p-space-lg rounded-xl bg-surface-container shadow-md mb-space-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-space-sm relative">
+<!-- Step 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[16px]">database</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 01</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Raw CSV Ingest</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">48,895 raw records loaded via NYC Open Data API.</p>
+</div>
+<span class="font-label-sm text-label-sm text-secondary mt-2">16 features</span>
+</div>
+<!-- Step 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">cleaning_services</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 02</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Data Cleaning</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Imputed 10,052 null review dates; trimmed $0 price artifacts.</p>
+</div>
+<span class="font-label-sm text-label-sm text-primary mt-2">Pandas v2.1</span>
+</div>
+<!-- Step 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[16px]">table_rows</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 03</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Aggregation</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Grouped by 221 neighborhood micro-tracts and room types.</p>
+</div>
+<span class="font-label-sm text-label-sm text-secondary mt-2">Groupby &amp; Rollups</span>
+</div>
+<!-- Step 4 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-tertiary mb-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 04</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Geo Projection</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Transformed EPSG:4326 lat/long coordinates to Canvas SVG coordinates.</p>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary mt-2">d3-geo Mercator</span>
+</div>
+<!-- Step 5 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">bar_chart</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 05</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Visual Encoding</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Scales, histograms, radial density contours, and scatter layers.</p>
+</div>
+<span class="font-label-sm text-label-sm text-primary mt-2">D3.js v7 Core</span>
+</div>
+<!-- Step 6 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[16px]">auto_stories</span>
+<span class="font-label-sm text-label-sm font-semibold">STEP 06</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-1">Data Journalism</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Editorial layout, responsive telemetry, and interactive HUD controls.</p>
+</div>
+<span class="font-label-sm text-label-sm text-secondary mt-2">Observable-Grade</span>
+</div>
+</div>
+</div>
+<!-- Version & Stack Badges -->
+<div class="flex flex-wrap items-center justify-between gap-space-md p-space-md rounded-xl bg-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">layers</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Production Tech Stack</span>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-on-surface">React 18.2</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">D3.js 7.8</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-primary">GeoJSON / TopoJSON</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-on-surface-variant">Tailwind CSS 3.4</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-tertiary">Python Pandas 2.1</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================
+       INLINE JAVASCRIPT MICRO-INTERACTIONS
+       ======================================================== -->
+<script>
+    (function() {
+      // Toggle Median vs Average buttons in Question 01
+      const btnMedian = document.getElementById('btn-median-price');
+      const btnAvg = document.getElementById('btn-avg-price');
+
+      if (btnMedian && btnAvg) {
+        btnMedian.addEventListener('click', function() {
+          btnMedian.className = 'px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-secondary text-on-secondary shadow-sm transition-all';
+          btnAvg.className = 'px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all';
+        });
+
+        btnAvg.addEventListener('click', function() {
+          btnAvg.className = 'px-space-sm py-space-xs rounded-full font-label-md text-label-md bg-secondary text-on-secondary shadow-sm transition-all';
+          btnMedian.className = 'px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all';
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest"><div class="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col gap-space-xs text-center md:text-left"><span class="font-headline-md text-headline-md text-on-surface">Airbnb Listings &amp; Reviews</span><p class="font-body-sm text-body-sm text-on-surface-variant">Investigative exploratory data analytics, pricing models, and spatial economics.</p></div><div class="flex items-center gap-space-md text-center"><span class="font-label-sm text-label-sm text-on-surface-variant">© 2025 Quantitative Research Portfolio</span><a class="font-label-sm text-label-sm text-secondary hover:underline" data-path="methodology" href="#">Documentation</a><a class="font-label-sm text-label-sm text-secondary hover:underline" data-path="dataset-source" href="#">Data Dictionary</a></div></div></footer></body></html>
